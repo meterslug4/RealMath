@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 7127644412283470374}
   - component: {fileID: 1521408133720470998}
   - component: {fileID: 4161768891048624813}
-  - component: {fileID: 6367446322505845417}
+  - component: {fileID: 1787144277460103629}
   m_Layer: 0
   m_Name: ConePoint
   m_TagString: ConePoint
@@ -150,8 +150,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 339404726973162461}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.01008}
-  m_LocalScale: {x: 0.001, y: 0.001, z: 0.0015}
+  m_LocalPosition: {x: 0, y: 0, z: 0.01}
+  m_LocalScale: {x: 0.0015, y: 0.0015, z: 0.0015}
   m_Children: []
   m_Father: {fileID: 641836484783581230}
   m_RootOrder: 0
@@ -203,8 +203,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &6367446322505845417
-BoxCollider:
+--- !u!135 &1787144277460103629
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -214,8 +214,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 1.5
+  m_Center: {x: -0.0000038146973, y: 0, z: 0.0000009536743}
 --- !u!1 &3443213177602203400
 GameObject:
   m_ObjectHideFlags: 0

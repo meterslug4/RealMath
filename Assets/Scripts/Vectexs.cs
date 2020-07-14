@@ -24,6 +24,8 @@ public class Vectexs : MonoBehaviour
     public bool isconSideStart = false; //옆면 부터 자르기 시작했다
     public bool isTop = false;
     public bool isBotum = false;
+    public bool isStartPoint = false;//정사면체 정팔면체 자를시 시작점으로 꼭지점을 건드린경우
+    public bool isEndPoint = false;//정사면체 정팔면체를 자를시 끝점으로 꼭지점을 건드린경우
     public Transform objcenter;
     public List<GameObject> throwObj;
     public int currentFigure;
@@ -250,9 +252,13 @@ public class Vectexs : MonoBehaviour
                 break;
             case 3:
                 msg = "자른 단면은 " + vertexs_RemoveDuple.Count + "각형입니다.";
+                isStartPoint = false;
+                isEndPoint = false;
                 break;
             case 4:
                 msg = "자른 단면은 " + vertexs_RemoveDuple.Count + "각형입니다.";
+                isStartPoint = false;
+                isEndPoint = false;
                 break;
         }
     }

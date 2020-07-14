@@ -11,6 +11,7 @@ TagManager:
   - ConePlat
   - Botum
   - Top
+  - Point
   layers:
   - Default
   - TransparentFX
