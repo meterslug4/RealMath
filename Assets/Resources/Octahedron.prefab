@@ -127,6 +127,8 @@ MonoBehaviour:
   MoveSpeed: 0.3
   MoveTime: 0.5
   isCutting: 1
+  edge: {fileID: 4617251648572949008, guid: 5f7b909c9267d314990824f308440d5f, type: 3}
+  edRoot: {fileID: 3941171848144103164, guid: 8d68fd60c6a08ba49bb51fea671c2555, type: 3}
 --- !u!1 &1199504867837520124
 GameObject:
   m_ObjectHideFlags: 0

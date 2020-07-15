@@ -16,4 +16,5 @@ public class CutTest : MonoBehaviour
             testObj = Instantiate(Reset, ResetPos.transform.position, Quaternion.identity);
         }
     }
+
 }

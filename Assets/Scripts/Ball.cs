@@ -47,6 +47,7 @@ public class Ball : MonoBehaviour
     void Start()
     {
         startPos = Vector3.zero;
+        endPos = Vector3.zero;
         cameraPos = GameObject.Find("OVRCameraRig");
         centerEye = cameraPos.transform.GetChild(0).GetChild(1).transform;
         //centerEye = cameraPos.transform;
@@ -59,8 +60,13 @@ public class Ball : MonoBehaviour
 
     void Update()
     {
-       // centerEye = cameraPos.transform.GetChild(0).GetChild(1).transform;
-        
+        // centerEye = cameraPos.transform.GetChild(0).GetChild(1).transform;
+        //꼭지점 그리기
+        if (Vectexs.Get.edgeFind == true)
+        {
+            Vectexs.Get.edgeFind = false;
+            FindEdge();
+        }
         if (isCutStart == true && isCutend == true && isCutting == true)
         {
             isCutStart = false;
@@ -102,6 +108,7 @@ public class Ball : MonoBehaviour
          new Material(Shader.Find("Unlit/Color")));
         gameObjects[0].GetComponent<Ball>().isCutting = false;
         gameObjects[0].AddComponent<MeshCollider>().convex = true;
+        
         //gameObjects[0].AddComponent<Ball>();
         //gameObjects[0].transform.position += -angle*1;
         //태그를 추가해준다 자르고나서
@@ -196,5 +203,16 @@ public class Ball : MonoBehaviour
                                                           //centerEye
 
         obj.transform.rotation = Quaternion.Slerp(obj.transform.rotation, Quaternion.LookRotation(-centerEye.transform.forward), Time.deltaTime * 4.0f);
+    }
+    public GameObject edge;
+    public void FindEdge()
+    {
+        for (int i = 0; i < Vectexs.Get.vertexs_RemoveDuple.Count; i++)
+        {
+            //Vectexs.Get.vertexs_RemoveDuple[i]
+            Instantiate(edge, Vectexs.Get.vertexs_RemoveDuple[i], Quaternion.identity, gameObjects[0].transform);
+            
+        }
+
     }
 }

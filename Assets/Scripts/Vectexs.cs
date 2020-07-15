@@ -26,6 +26,7 @@ public class Vectexs : MonoBehaviour
     public bool isBotum = false;
     public bool isStartPoint = false;//정사면체 정팔면체 자를시 시작점으로 꼭지점을 건드린경우
     public bool isEndPoint = false;//정사면체 정팔면체를 자를시 끝점으로 꼭지점을 건드린경우
+    public bool edgeFind = false;//중복점 다 제거하고 잘린면의 꼭지점 찾음
     public Transform objcenter;
     public List<GameObject> throwObj;
     public int currentFigure;
@@ -177,6 +178,7 @@ public class Vectexs : MonoBehaviour
             vertexs_RemoveDuple.RemoveAt(removeIndex[k]-removeCnt);
             removeCnt++;
         }
+        edgeFind = true;
         //vertexs_RemoveDuple.RemoveAt(4);
          //vertexs_RemoveDuple.RemoveAt(5);
           //for(int i=0; i<vertexs_RemoveDuple.Count;i++)
@@ -320,4 +322,6 @@ public class Vectexs : MonoBehaviour
             msg = "자른 단면은 직각 삼각형 입니다.";
         }
     }
+    
+
 }
