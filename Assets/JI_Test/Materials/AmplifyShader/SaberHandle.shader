@@ -1,6 +1,6 @@
 // Made with Amplify Shader Editor
 // Available at the Unity Asset Store - http://u3d.as/y3X 
-Shader "BlTest"
+Shader "Hand"
 {
 	Properties
 	{
@@ -23,15 +23,13 @@ Shader "BlTest"
 
 		void surf( Input i , inout SurfaceOutputStandard o )
 		{
-			float4 color1 = IsGammaSpace() ? float4(1,1,0,0.4901961) : float4(1,1,0,0.4901961);
-			o.Albedo = color1.rgb;
 			float3 ase_worldPos = i.worldPos;
 			float3 ase_worldViewDir = normalize( UnityWorldSpaceViewDir( ase_worldPos ) );
 			float3 ase_worldNormal = i.worldNormal;
-			float fresnelNdotV2 = dot( ase_worldNormal, ase_worldViewDir );
-			float fresnelNode2 = ( 0.18 + 1.19 * pow( 1.0 - fresnelNdotV2, 0.59 ) );
-			float4 color3 = IsGammaSpace() ? float4(1,0,0,0) : float4(1,0,0,0);
-			o.Emission = ( fresnelNode2 * color3 ).rgb;
+			float fresnelNdotV17 = dot( ase_worldNormal, ase_worldViewDir );
+			float fresnelNode17 = ( 0.0 + 1.46 * pow( 1.0 - fresnelNdotV17, 2.53 ) );
+			float4 color16 = IsGammaSpace() ? float4(1,0,0.05389357,0) : float4(1,0,0.004295359,0);
+			o.Emission = ( fresnelNode17 * color16 ).rgb;
 			o.Alpha = 1;
 		}
 
@@ -110,15 +108,13 @@ Shader "BlTest"
 }
 /*ASEBEGIN
 Version=18000
-206.4;167.2;949;446;2514.662;358.5532;3.496207;True;False
-Node;AmplifyShaderEditor.FresnelNode;2;-886.8041,180.9819;Inherit;False;Standard;WorldNormal;ViewDir;False;False;5;0;FLOAT3;0,0,1;False;4;FLOAT3;0,0,0;False;1;FLOAT;0.18;False;2;FLOAT;1.19;False;3;FLOAT;0.59;False;1;FLOAT;0
-Node;AmplifyShaderEditor.ColorNode;3;-789.6319,428.5657;Inherit;False;Constant;_Color1;Color 1;0;0;Create;True;0;0;False;0;1,0,0,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.ColorNode;1;-543.3387,-271.6758;Inherit;False;Constant;_Color0;Color 0;0;0;Create;True;0;0;False;0;1,1,0,0.4901961;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;4;-409.4086,328.2394;Inherit;False;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;0,0;Float;False;True;-1;2;ASEMaterialInspector;0;0;Standard;BlTest;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;Back;0;False;-1;0;False;-1;False;0;False;-1;0;False;-1;False;0;Opaque;0.5;True;True;0;False;Opaque;;Geometry;All;14;all;True;True;True;True;0;False;-1;False;0;False;-1;255;False;-1;255;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;False;2;15;10;25;False;0.5;True;0;0;False;-1;0;False;-1;0;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;Relative;0;;-1;-1;-1;-1;0;False;0;0;False;-1;-1;0;False;-1;0;0;0;False;0.1;False;-1;0;False;-1;16;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0;False;9;FLOAT;0;False;10;FLOAT;0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
-WireConnection;4;0;2;0
-WireConnection;4;1;3;0
-WireConnection;0;0;1;0
-WireConnection;0;2;4;0
+406.4;136;1079;529;1696.632;308.3709;2.211059;True;False
+Node;AmplifyShaderEditor.ColorNode;16;-805.7626,307.1304;Inherit;False;Constant;_Color1;Color 0;0;0;Create;True;0;0;False;0;1,0,0.05389357,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.FresnelNode;17;-671.8542,3.296486;Inherit;True;Standard;WorldNormal;ViewDir;False;False;5;0;FLOAT3;0,0,1;False;4;FLOAT3;0,0,0;False;1;FLOAT;0;False;2;FLOAT;1.46;False;3;FLOAT;2.53;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;18;-507.9525,214.9146;Inherit;True;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;0,0;Float;False;True;-1;2;ASEMaterialInspector;0;0;Standard;Hand;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;Back;0;False;-1;0;False;-1;False;0;False;-1;0;False;-1;False;0;Opaque;0.5;True;True;0;False;Opaque;;Geometry;All;14;all;True;True;True;True;0;False;-1;False;0;False;-1;255;False;-1;255;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;False;2;15;10;25;False;0.5;True;0;0;False;-1;0;False;-1;0;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;Relative;0;;-1;-1;-1;-1;0;False;0;0;False;-1;-1;0;False;-1;0;0;0;False;0.1;False;-1;0;False;-1;16;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0;False;9;FLOAT;0;False;10;FLOAT;0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
+WireConnection;18;0;17;0
+WireConnection;18;1;16;0
+WireConnection;0;2;18;0
 ASEEND*/
-//CHKSM=9135C2F42C61DA023E9B8F3C2B27E6FCA3DB45E5
+//CHKSM=A62DBA97079215EE5D5E0ED719CAB582392844AA

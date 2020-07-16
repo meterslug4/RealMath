@@ -11,11 +11,9 @@ GameObject:
   - component: {fileID: 4771953662109391507}
   - component: {fileID: 4771953662109391504}
   - component: {fileID: 4771953662109391505}
-  - component: {fileID: 4771953662109391510}
-  - component: {fileID: 4771953662109391511}
   m_Layer: 0
-  m_Name: w
-  m_TagString: Cutable
+  m_Name: CubeMap
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b243e8a276e29084cafceb35f0fe4174, type: 2}
+  - {fileID: 2100000, guid: d24b9fe27c4535644a0b78a5d5912772, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -81,39 +79,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &4771953662109391510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4771953662109391508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bf0e8fdf84475b428e939d3e17a0a3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Obj: {fileID: 3873502843824606164, guid: 5e0fd5ec6cf73ad4fa5da69298fa19b3, type: 3}
-  end: {fileID: 3873502843824606164, guid: 9f2cfc63f5cbf5a4985504dbf205558f, type: 3}
-  startPos: {x: 0, y: 0, z: 0}
-  endPos: {x: 0, y: 0, z: 0}
-  angle: {x: 0, y: 0, z: 0}
-  isCutStart: 0
-  isCutend: 0
-  center: {x: 0, y: 0, z: 0}
-  MoveSpeed: 0.4
-  MoveTime: 0.5
---- !u!64 &4771953662109391511
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4771953662109391508}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
