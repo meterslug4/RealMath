@@ -233,14 +233,14 @@ public class Ball : MonoBehaviour
     //bool exceptrotate = false;
     public void FindEdge()
     {
-        for (int i = 0; i < Vectexs.Get.vertexs_RemoveDuple.Count; i++)
+        for (int i = 0; i < Vectexs.Get.finalVectors.Count; i++)
         {
             //Vectexs.Get.vertexs_RemoveDuple[i]
             //Vector3 edgepos;
             //edgepos.x = Vectexs.Get.vertexs_RemoveDuple[i].x;
             //edgepos.y = Vectexs.Get.vertexs_RemoveDuple[i].y+0.5f;
             //edgepos.z = Vectexs.Get.vertexs_RemoveDuple[i].z;
-            tempedge.Add(Instantiate(edge, Vectexs.Get.vertexs_RemoveDuple[i], Quaternion.identity));
+            tempedge.Add(Instantiate(edge, Vectexs.Get.finalVectors[i], Quaternion.identity));
         }
         templistFull = true;
     }

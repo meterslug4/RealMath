@@ -43,7 +43,7 @@ public class Vectexs : MonoBehaviour
             Destroy(gameObject);
         }
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
     private void Start()
     {
@@ -59,14 +59,16 @@ public class Vectexs : MonoBehaviour
     public List<Vector3> vertexs = new List<Vector3>(); //잘리는 단면의 교차점들을 받아올 리스트
     public List<Vector3> vertexs_RemoveDuple;
     public List<Vector3> tempList; //각 정점별로 생설할수 있는 모든 벡터들을 임시로 저장할곳
+    public List<Vector3> tempList2;
     //public List<Vector3> vertorDis;
     public List<int> removeIndex;
+    public List<int> removeIndex2;
     int num ;
     //public Vector3[] points;
     
     //public List<float> test = new List<float>();
-    List<Vector3> fianlVectors = new List<Vector3>();
-    List<Vector3> fianlVectorsright = new List<Vector3>();
+    public List<Vector3> finalVectors = new List<Vector3>();
+    //List<Vector3> fianlVectorsright = new List<Vector3>();
      private void Update()
     {
         if(isGet == true)
@@ -127,11 +129,14 @@ public class Vectexs : MonoBehaviour
                vertexs_RemoveDuple.Add(vertexs[i]);
             }
         }
+        //MakeVertex() 실행전에(사이값 제거하기)전에 근사값이 존재하면 전부다 일치 시켜주는 작업을한다.
+        MakeVertex();
         RemoveDuple2();
     }
-    List<Vector3> tempduple = new List<Vector3>();
+    public List<Vector3> tempduple = new List<Vector3>();
     public void RemoveDuple2()
     {
+        Debug.Log(vertexs_RemoveDuple.Count);
         for(int i=0; i<vertexs_RemoveDuple.Count;i++)
         {
             nextVector = Vector3.zero;
@@ -140,52 +145,90 @@ public class Vectexs : MonoBehaviour
                 nextVector = vertexs_RemoveDuple[k];
                 if (Mathf.Approximately(vertexs_RemoveDuple[i].x, nextVector.x))
                 {
-                    Debug.Log("변경전" +nextVector.x);
                     nextVector.x = vertexs_RemoveDuple[i].x;
-                    Debug.Log("변경후" + nextVector.x);
                 }
-
                 if (Mathf.Approximately(vertexs_RemoveDuple[i].y, nextVector.y))
                 {
                     nextVector.y = vertexs_RemoveDuple[i].y;
                 }
-
                 if (Mathf.Approximately(vertexs_RemoveDuple[i].z, nextVector.z))
                 {
                     nextVector.z = vertexs_RemoveDuple[i].z;
                 }
+                Debug.Log("바뀌기 전값" + vertexs_RemoveDuple[k]);
                 vertexs_RemoveDuple[k] = nextVector;
+                Debug.Log("바꿀값" + nextVector);
             }
            
         }
-        MakeVertex();
-        //tempduple.Clear();
-        //Debug.Log("임시 리스트 비워준다");
-        //for (int i=0; i<vertexs_RemoveDuple.Count;i++)
-        //{
-        //        if (tempduple.Contains(vertexs_RemoveDuple[i]))
-        //        {
+        finalVectors.Clear();
+        Debug.Log("넣기전" +vertexs_RemoveDuple.Count);
+        for (int i = 0; i<vertexs_RemoveDuple.Count;i++)
+        {
+            if(finalVectors.Contains(vertexs_RemoveDuple[i]))
+            {
 
-        //        }
-        //        else
-        //        {
-        //            tempduple.Add(vertexs_RemoveDuple[i]);
-        //        }
+            }
+            else
+            {
+                Debug.Log("넣는다");
+                finalVectors.Add(vertexs_RemoveDuple[i]);
+            }
+        }
+        MakeVertex2();
+       
+    }
+    public void MakeVertex2()
+    {
+        for (int i = 0; i < finalVectors.Count; i++)
+        {
+            tempList2.Clear();
+            for (int k = 0; k < finalVectors.Count; k++)
+            {
+                if (finalVectors[i] != finalVectors[k]) //자기 자신하고는 비교할필요 없다
+                {
+                    tempList2.Add((finalVectors[k] - finalVectors[i]).normalized); //tempList에 해당 점에서 생길수 있는 모든 벡터들을 가져놓는다
+                }
+            }
+            //i번쨰 인덱스와 구할수 있는 모든 벡터를 노멀라이즈 해서 구했다
+            //tempList 에서 2개씩 짝지어서 모든 벡터를 cross해서 0이 나오는것을 찾아야한다 0이 나오는 것은 끼인값이다 
+            for (int k = 0; k < tempList2.Count; k++)
+            {
+                for (int j = 0; j < tempList2.Count; j++)
+                {
+                    if (tempList2[k] != tempList2[j]) //tempList에는 노말라이즈한 방향만 들어가있다 같은 방향인것은 제외하고 비교한다. 찾고자하는것은 -부호만 다른벡터를 찾아서 제거하는것이다. 방향이 완전히 같은것은 예외
+                    {
+                        if (Vector3.Cross(tempList2[k], tempList2[j]) == Vector3.zero)
+                        {
+                            if (removeIndex2.Contains(i))
+                            {
 
-        //}
-        //MakeVertex();
+                            }
+                            else
+                            {
+                                removeIndex2.Add(i);
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+        //vertexs_RemoveDuple 에서 사이값들도 제거해준다 제거는 removeIndex에 있는 값들이 제거해야할 인덱스번호이다
+        int removeCnt = 0;
+        for (int k = 0; k < removeIndex2.Count; k++)
+        {
+            finalVectors.RemoveAt(removeIndex2[k] - removeCnt);
+            removeCnt++;
+        }
+        edgeFind = true;
+        CheckFigure(); //도형 판정
     }
     public void MakeVertex()
     {
-        //Debug.Log(vertexs_RemoveDuple.Count);
-        //vertexs_RemoveDuple = tempduple;
-        //Debug.Log(vertexs_RemoveDuple.Count);
-        //Debug.Log("근사값 정리된 임시리스트를 넣어줌");
-     for(int i=0; i<vertexs_RemoveDuple.Count; i++)
+            for(int i=0; i<vertexs_RemoveDuple.Count; i++)
             {
                 tempList.Clear();
-
-                //Debug.Log(i+ "번쨰 루프");
                 for(int k=0; k<vertexs_RemoveDuple.Count; k++)
                 {
                     if(vertexs_RemoveDuple[i] != vertexs_RemoveDuple[k]) //자기 자신하고는 비교할필요 없다
@@ -193,8 +236,6 @@ public class Vectexs : MonoBehaviour
                         tempList.Add((vertexs_RemoveDuple[k]-vertexs_RemoveDuple[i]).normalized); //tempList에 해당 점에서 생길수 있는 모든 벡터들을 가져놓는다
                     }
                 }
-                //Debug.Log(tempList.Count);
-
                 //i번쨰 인덱스와 구할수 있는 모든 벡터를 노멀라이즈 해서 구했다
                 //tempList 에서 2개씩 짝지어서 모든 벡터를 cross해서 0이 나오는것을 찾아야한다 0이 나오는 것은 끼인값이다 
                 for(int k=0; k<tempList.Count;k++)
@@ -219,26 +260,15 @@ public class Vectexs : MonoBehaviour
                     }
                 }
             }
-
-
         //vertexs_RemoveDuple 에서 사이값들도 제거해준다 제거는 removeIndex에 있는 값들이 제거해야할 인덱스번호이다
          int removeCnt=0;
         for(int k=0; k<removeIndex.Count;k++)
         {
-           
             vertexs_RemoveDuple.RemoveAt(removeIndex[k]-removeCnt);
             removeCnt++;
         }
-        edgeFind = true;
-        //vertexs_RemoveDuple.RemoveAt(4);
-         //vertexs_RemoveDuple.RemoveAt(5);
-          //for(int i=0; i<vertexs_RemoveDuple.Count;i++)
-          //  {
-          //      GameObject obj = Instantiate(text3d,vertexs_RemoveDuple[i],Quaternion.identity);
-          //      obj.GetComponent<TextMesh>().text = i.ToString();
-          //  }
-        //Debug.Log("자른 단면은 "+ vertexs_RemoveDuple.Count +"각형입니다.");
-        CheckFigure(); //도형 판정
+        //edgeFind = true;
+        //CheckFigure(); //도형 판정
     }
     public void ThrowObj()
     {
@@ -255,33 +285,33 @@ public class Vectexs : MonoBehaviour
         {
             case 0:
                 
-                if(vertexs_RemoveDuple.Count==3)
+                if(finalVectors.Count==3)
                 {
                     TriangleCheck();
                 }
-                else if (vertexs_RemoveDuple.Count == 4)
+                else if (finalVectors.Count == 4)
                 {
                     Square();
                 }
                 else
                 {
-                    msg = "자른 단면은 " + vertexs_RemoveDuple.Count + "각형입니다.";
+                    msg = "자른 단면은 " + finalVectors.Count + "각형입니다.";
                 }
 
                     break;
             case 1:
                
-                if((isTop == true && isBotum == true) ||vertexs_RemoveDuple.Count==4)
+                if((isTop == true && isBotum == true) || finalVectors.Count==4)
                 {
                     msg = "자른 단면은 직사각형 입니다.";
                 }
                 else if(isTop == false && isBotum == false)
                 {
-                    if(vertexs_RemoveDuple.Count !=4)
+                    if(finalVectors.Count !=4)
                     msg = "자른 단면은 원 입니다.";
                 }
-                else if((isTop == true && isBotum == false)&& vertexs_RemoveDuple.Count != 4 ||
-                    (isTop == false && isBotum == true) && vertexs_RemoveDuple.Count != 4)
+                else if((isTop == true && isBotum == false)&& finalVectors.Count != 4 ||
+                    (isTop == false && isBotum == true) && finalVectors.Count != 4)
                 {
                     msg = "자른 단면은 포물선 입니다.";
                 }
@@ -310,12 +340,12 @@ public class Vectexs : MonoBehaviour
                 isconePlat = false;
                 break;
             case 3:
-                msg = "자른 단면은 " + vertexs_RemoveDuple.Count + "각형입니다.";
+                msg = "자른 단면은 " + finalVectors.Count + "각형입니다.";
                 isStartPoint = false;
                 isEndPoint = false;
                 break;
             case 4:
-                msg = "자른 단면은 " + vertexs_RemoveDuple.Count + "각형입니다.";
+                msg = "자른 단면은 " + finalVectors.Count + "각형입니다.";
                 isStartPoint = false;
                 isEndPoint = false;
                 break;
@@ -324,9 +354,9 @@ public class Vectexs : MonoBehaviour
     public void TriangleCheck()
     {
         //절대값으로 각 점간의 길이 구하기
-        float a = Mathf.Abs((vertexs_RemoveDuple[0] - vertexs_RemoveDuple[1]).sqrMagnitude);
-        float b = Mathf.Abs((vertexs_RemoveDuple[0] - vertexs_RemoveDuple[2]).sqrMagnitude);
-        float c = Mathf.Abs((vertexs_RemoveDuple[1] - vertexs_RemoveDuple[2]).sqrMagnitude);
+        float a = Mathf.Abs((finalVectors[0] - finalVectors[1]).sqrMagnitude);
+        float b = Mathf.Abs((finalVectors[0] - finalVectors[2]).sqrMagnitude);
+        float c = Mathf.Abs((finalVectors[1] - finalVectors[2]).sqrMagnitude);
         //각 길이에 10씩 곱하기
         a = a * 10;
         b = b * 10;
@@ -353,10 +383,10 @@ public class Vectexs : MonoBehaviour
     }
     public void Square()
     {
-        float a= Mathf.Abs((vertexs_RemoveDuple[1] - vertexs_RemoveDuple[0]).sqrMagnitude);
-        float b = Mathf.Abs((vertexs_RemoveDuple[2] - vertexs_RemoveDuple[0]).sqrMagnitude);
-        float c = Mathf.Abs((vertexs_RemoveDuple[3] - vertexs_RemoveDuple[1]).sqrMagnitude);
-        float d = Mathf.Abs((vertexs_RemoveDuple[3] - vertexs_RemoveDuple[2]).sqrMagnitude);
+        float a= Mathf.Abs((finalVectors[1] - finalVectors[0]).sqrMagnitude);
+        float b = Mathf.Abs((finalVectors[2] - finalVectors[0]).sqrMagnitude);
+        float c = Mathf.Abs((finalVectors[3] - finalVectors[1]).sqrMagnitude);
+        float d = Mathf.Abs((finalVectors[3] - finalVectors[2]).sqrMagnitude);
         //각 길이에 10씩 곱하기 
         a = a * 10;
         b = b * 10;
