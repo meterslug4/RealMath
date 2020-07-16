@@ -140,9 +140,9 @@ public class Vectexs : MonoBehaviour
                 nextVector = vertexs_RemoveDuple[k];
                 if (Mathf.Approximately(vertexs_RemoveDuple[i].x, nextVector.x))
                 {
-                    //Debug.Log("변경전" +nextVector.x);
+                    Debug.Log("변경전" +nextVector.x);
                     nextVector.x = vertexs_RemoveDuple[i].x;
-                    //Debug.Log("변경후" + nextVector.x);
+                    Debug.Log("변경후" + nextVector.x);
                 }
 
                 if (Mathf.Approximately(vertexs_RemoveDuple[i].y, nextVector.y))
@@ -177,10 +177,10 @@ public class Vectexs : MonoBehaviour
     }
     public void MakeVertex()
     {
-        Debug.Log(vertexs_RemoveDuple.Count);
+        //Debug.Log(vertexs_RemoveDuple.Count);
         //vertexs_RemoveDuple = tempduple;
-        Debug.Log(vertexs_RemoveDuple.Count);
-        Debug.Log("근사값 정리된 임시리스트를 넣어줌");
+        //Debug.Log(vertexs_RemoveDuple.Count);
+        //Debug.Log("근사값 정리된 임시리스트를 넣어줌");
      for(int i=0; i<vertexs_RemoveDuple.Count; i++)
             {
                 tempList.Clear();

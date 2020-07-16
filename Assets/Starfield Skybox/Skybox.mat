@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SktBox
+  m_Name: Skybox
   m_Shader: {fileID: 104, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -92,7 +92,15 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+<<<<<<< HEAD:Assets/Starfield Skybox/SktBox.mat
     - _Rotation: 171.1706
+=======
+<<<<<<< HEAD
+    - _Rotation: 56.687176
+=======
+    - _Rotation: 94.69207
+>>>>>>> d1485e20a08f05d20a3f5c847deeb4e02e4968a6
+>>>>>>> c8ea015d92472c3e3a242cb2a0296fa4ae945452:Assets/Starfield Skybox/Skybox.mat
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1

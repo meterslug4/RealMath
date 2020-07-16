@@ -22,7 +22,7 @@ Shader "OutTest2"
 
 		void surf( Input i , inout SurfaceOutputStandard o )
 		{
-			float4 color5 = IsGammaSpace() ? float4(0.254902,1,1,0) : float4(0.05286067,1,1,0);
+			float4 color5 = IsGammaSpace() ? float4(0.254902,1,1,0) : float4(0.05286065,1,1,0);
 			float2 appendResult10_g1 = (float2(0.97 , 0.97));
 			float2 temp_output_11_0_g1 = ( abs( (i.uv_texcoord*2.0 + -1.0) ) - appendResult10_g1 );
 			float2 break16_g1 = ( 1.0 - ( temp_output_11_0_g1 / fwidth( temp_output_11_0_g1 ) ) );
@@ -37,7 +37,7 @@ Shader "OutTest2"
 }
 /*ASEBEGIN
 Version=18000
-17.6;209.6;815;402;1344.016;348.5214;2.038995;False;False
+406.4;136.8;1079;528;1613.163;470.8611;2.038995;True;False
 Node;AmplifyShaderEditor.FunctionNode;2;-575.1435,131.7395;Inherit;False;Rectangle;-1;;1;6b23e0c975270fb4084c354b2c83366a;0;3;1;FLOAT2;0,0;False;2;FLOAT;0.97;False;3;FLOAT;0.97;False;1;FLOAT;0
 Node;AmplifyShaderEditor.ColorNode;5;-469.4561,-342.0928;Inherit;False;Constant;_Color0;Color 0;0;0;Create;True;0;0;False;0;0.254902,1,1,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.OneMinusNode;3;-270.4065,2.631073;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
@@ -48,4 +48,4 @@ WireConnection;4;0;5;0
 WireConnection;4;1;3;0
 WireConnection;0;2;4;0
 ASEEND*/
-//CHKSM=05699A8BC22986355FB2ED88253CA210279EACAD
+//CHKSM=1F3492FF9C1A9936C3ABB2CA58857A693D6B9788
