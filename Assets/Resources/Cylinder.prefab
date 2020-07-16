@@ -191,6 +191,8 @@ MonoBehaviour:
   objnum: 1
   leftSideRoot: {fileID: 327475180429761234, guid: fbc66660fa2310e43a1e8d790d339406,
     type: 3}
+  edgeRoot: {fileID: 1066004690229602826, guid: abe9e6c8c99455844980f496811a68e1,
+    type: 3}
   startPos: {x: 0, y: 0, z: 0}
   endPos: {x: 0, y: 0, z: 0}
   angle: {x: 0, y: 0, z: 0}
@@ -203,7 +205,6 @@ MonoBehaviour:
   MoveTime: 1.5
   isCutting: 1
   edge: {fileID: 4617251648572949008, guid: 5f7b909c9267d314990824f308440d5f, type: 3}
-  edRoot: {fileID: 3941171848144103164, guid: 8d68fd60c6a08ba49bb51fea671c2555, type: 3}
 --- !u!64 &1921936750071039366
 MeshCollider:
   m_ObjectHideFlags: 0

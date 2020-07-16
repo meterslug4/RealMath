@@ -13,7 +13,7 @@ public class Vectexs : MonoBehaviour
     //public GameObject sphere;
     public GameObject[] Figures;
     public Transform[] spawn;
-    public GameObject text3d;
+    public GameObject pointRoot;
     public bool ismakeCube = true;
     public bool ismakeCylinder = true;
     public bool ismakeCone = true;
@@ -27,6 +27,7 @@ public class Vectexs : MonoBehaviour
     public bool isStartPoint = false;//정사면체 정팔면체 자를시 시작점으로 꼭지점을 건드린경우
     public bool isEndPoint = false;//정사면체 정팔면체를 자를시 끝점으로 꼭지점을 건드린경우
     public bool edgeFind = false;//중복점 다 제거하고 잘린면의 꼭지점 찾음
+    public bool vertexsField = false;//게임씬에 꼭지점을 다 찍었는지 체크
     public Transform objcenter;
     public List<GameObject> throwObj;
     public int currentFigure;
@@ -109,27 +110,77 @@ public class Vectexs : MonoBehaviour
             ThrowObj();
         }
     }
-
+    Vector3 nextVector;
     //최종 값들만 남김 아직 중간에 끼인 값은 제거 안함
-    public void RemoveDuple()
+    public void RemoveDuple() //x,y,z 을 비교해서 근사값이면 이전값을 덮어 씌운다.
     {
         for(int i=0; i<vertexs.Count;i++)
         {
+
+            //i가 0이 아닐때만 이전값하고 비교해서 구한다
             if(vertexs_RemoveDuple.Contains(vertexs[i]))
             {
 
             }
-            else
+            else //넣는다
             {
-                vertexs_RemoveDuple.Add(vertexs[i]);
+               vertexs_RemoveDuple.Add(vertexs[i]);
             }
         }
-        MakeVertex();
-
+        RemoveDuple2();
     }
+    List<Vector3> tempduple = new List<Vector3>();
+    public void RemoveDuple2()
+    {
+        for(int i=0; i<vertexs_RemoveDuple.Count;i++)
+        {
+            nextVector = Vector3.zero;
+            for(int k=0; k<vertexs_RemoveDuple.Count; k++)
+            {
+                nextVector = vertexs_RemoveDuple[k];
+                if (Mathf.Approximately(vertexs_RemoveDuple[i].x, nextVector.x))
+                {
+                    //Debug.Log("변경전" +nextVector.x);
+                    nextVector.x = vertexs_RemoveDuple[i].x;
+                    //Debug.Log("변경후" + nextVector.x);
+                }
 
+                if (Mathf.Approximately(vertexs_RemoveDuple[i].y, nextVector.y))
+                {
+                    nextVector.y = vertexs_RemoveDuple[i].y;
+                }
+
+                if (Mathf.Approximately(vertexs_RemoveDuple[i].z, nextVector.z))
+                {
+                    nextVector.z = vertexs_RemoveDuple[i].z;
+                }
+                vertexs_RemoveDuple[k] = nextVector;
+            }
+           
+        }
+        MakeVertex();
+        //tempduple.Clear();
+        //Debug.Log("임시 리스트 비워준다");
+        //for (int i=0; i<vertexs_RemoveDuple.Count;i++)
+        //{
+        //        if (tempduple.Contains(vertexs_RemoveDuple[i]))
+        //        {
+
+        //        }
+        //        else
+        //        {
+        //            tempduple.Add(vertexs_RemoveDuple[i]);
+        //        }
+
+        //}
+        //MakeVertex();
+    }
     public void MakeVertex()
     {
+        Debug.Log(vertexs_RemoveDuple.Count);
+        //vertexs_RemoveDuple = tempduple;
+        Debug.Log(vertexs_RemoveDuple.Count);
+        Debug.Log("근사값 정리된 임시리스트를 넣어줌");
      for(int i=0; i<vertexs_RemoveDuple.Count; i++)
             {
                 tempList.Clear();
@@ -220,17 +271,23 @@ public class Vectexs : MonoBehaviour
                     break;
             case 1:
                
-                if(isTop == true && isBotum == true)
+                if((isTop == true && isBotum == true) ||vertexs_RemoveDuple.Count==4)
                 {
                     msg = "자른 단면은 직사각형 입니다.";
                 }
                 else if(isTop == false && isBotum == false)
                 {
+                    if(vertexs_RemoveDuple.Count !=4)
                     msg = "자른 단면은 원 입니다.";
+                }
+                else if((isTop == true && isBotum == false)&& vertexs_RemoveDuple.Count != 4 ||
+                    (isTop == false && isBotum == true) && vertexs_RemoveDuple.Count != 4)
+                {
+                    msg = "자른 단면은 포물선 입니다.";
                 }
                 else
                 {
-                    msg = "자른 단면은 포물선 입니다.";
+
                 }
                 isTop = false;
                 isBotum = false;

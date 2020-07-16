@@ -12,6 +12,7 @@ TagManager:
   - Botum
   - Top
   - Point
+  - Edge
   layers:
   - Default
   - TransparentFX

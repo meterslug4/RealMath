@@ -147,7 +147,7 @@ public class Blade : MonoBehaviour
     {
         if(other.CompareTag("Cutable")==true)
         {
-            other.GetComponent<Ball>().isCutend = true;
+          
             //other.GetComponent<Ball>().endPos = other.ClosestPointOnBounds(transform.position);
             //오브젝트를 칼이 빠져나왔을때 endPos가 안정해졌으면 나온곳을 끝점으로 해준다.
             //
@@ -156,9 +156,15 @@ public class Blade : MonoBehaviour
                 other.GetComponent<Ball>().endPos = other.ClosestPoint(transform.position);
                 //Vectexs.Get.msg = "옆면으로 나옴";
             }
+            other.GetComponent<Ball>().isCutend = true;
             other.GetComponent<Ball>().dir2_ = transform.up;
             //other.GetComponent<Ball>().angle = subblade.transform.right;
         }
+        if(other.CompareTag("Point")==true)//마지막으로 꼭지점을 빠져나가면 
+        {
+            other.transform.parent.GetComponent<Ball>().endPos = other.transform.position;//endPos로 꼭지점넣어주기
+        }
+
         OVRInput.SetControllerVibration(0f, 0f, OVRInput.Controller.RTouch);
     }
 

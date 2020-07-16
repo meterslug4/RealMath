@@ -8992,11 +8992,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.8
+      value: 0.58000004
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.53000003
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_LocalRotation.x
@@ -13772,7 +13772,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1843632290}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.022, y: 0.57, z: 0.88}
+  m_LocalPosition: {x: 0.022, y: 0.57, z: 0.35}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 0}
@@ -14880,16 +14880,16 @@ MonoBehaviour:
   Figures:
   - {fileID: 4771953662109391508, guid: b23146bec1f31704998e513d931872fb, type: 3}
   - {fileID: 1921936750071039365, guid: 4155d91bf0634ec4aa7bbf43706f636b, type: 3}
-  - {fileID: 262214063899636372, guid: 7277a8483d4e26f499df64c77bfa22f4, type: 3}
-  - {fileID: 1579061415614679659, guid: 718728d01195c8a49b6a4aaf2966b5b4, type: 3}
-  - {fileID: 35752134403917226, guid: f7fc01a4025675b448b02bea2ba58c2d, type: 3}
+  - {fileID: 1591363148159333570, guid: e736af175d4dadc43b377f372f3d86d0, type: 3}
+  - {fileID: 6279334064715245189, guid: b2099c9798a2ddc4588f9a1eb139da2a, type: 3}
+  - {fileID: 4382178740144983500, guid: 2441b5f2a896dbe4c8f9a300ba710efa, type: 3}
   spawn:
   - {fileID: 682000793}
   - {fileID: 1468229607}
   - {fileID: 1975070245}
   - {fileID: 354157968}
   - {fileID: 831695269}
-  text3d: {fileID: 0}
+  pointRoot: {fileID: 0}
   ismakeCube: 1
   ismakeCylinder: 1
   ismakeCone: 1
@@ -14903,6 +14903,7 @@ MonoBehaviour:
   isStartPoint: 0
   isEndPoint: 0
   edgeFind: 0
+  vertexsField: 0
   objcenter: {fileID: 1843632291}
   throwObj: []
   currentFigure: 0
