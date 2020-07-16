@@ -13522,7 +13522,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
-<<<<<<< HEAD
 --- !u!4 &1843632291
 Transform:
   m_ObjectHideFlags: 0
@@ -13538,9 +13537,6 @@ Transform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1843632292
-=======
---- !u!65 &1732143710
->>>>>>> d1485e20a08f05d20a3f5c847deeb4e02e4968a6
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
