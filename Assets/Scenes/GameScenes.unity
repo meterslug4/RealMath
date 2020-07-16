@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 65dacb9f61bd00241aa861ce1d0c3e1c, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 81f714daf7144784b8a2f42f1cd30927, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -13514,6 +13514,7 @@ GameObject:
   - component: {fileID: 1732143713}
   - component: {fileID: 1732143712}
   - component: {fileID: 1732143711}
+  - component: {fileID: 1732143710}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -13521,7 +13522,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
-<<<<<<< HEAD
 --- !u!4 &1843632291
 Transform:
   m_ObjectHideFlags: 0
@@ -13549,8 +13549,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
-=======
->>>>>>> 81a3b2a9343e75cc87238adc268c1dbb2adb7e13
 --- !u!23 &1732143711
 MeshRenderer:
   m_ObjectHideFlags: 0
