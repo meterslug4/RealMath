@@ -124,8 +124,26 @@ public class Blade : MonoBehaviour
             }
                 
         }
-        //정사면체 정팔면체에서 꼭지점을 지났을 경우
-        if(other.CompareTag("Point")==true)
+        //정사면체 꼭지점을 지난경우
+        if(other.CompareTag("Point")==true && other.GetComponent<Ball>().objnum==3)
+        {
+            if(other.transform.parent.GetComponent<Ball>().startPos == Vector3.zero)
+            {
+                //시작점이 비었는데 꼭지점을 지난경우
+                other.transform.parent.GetComponent<Ball>().startPos = other.transform.position;
+                Vectexs.Get.isStartPoint = true;
+            }
+            else//시작점이 있는데 꼭지점을 지난경우에는 시작점이 꼭지점이 아닌경우에만 끝값으로 꼭지점을 넣는다
+            {
+                if(Vectexs.Get.isStartPoint ==false)
+                {
+                    other.transform.parent.GetComponent<Ball>().endPos = other.transform.position;
+                    Vectexs.Get.isEndPoint = true;
+                }
+            }
+        }
+        // 정팔면체에서 꼭지점을 지났을 경우
+        if(other.CompareTag("Point")==true && other.GetComponent<Ball>().objnum == 4)
         {
             if(other.transform.parent.GetComponent<Ball>().startPos == Vector3.zero)
             {

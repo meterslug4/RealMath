@@ -131,48 +131,71 @@ public class Vectexs : MonoBehaviour
         }
         //MakeVertex() 실행전에(사이값 제거하기)전에 근사값이 존재하면 전부다 일치 시켜주는 작업을한다.
         MakeVertex();
-        RemoveDuple2();
+        //RemoveDuple2();
+
     }
+    public bool FinalList = false;
     public List<Vector3> tempduple = new List<Vector3>();
-    public void RemoveDuple2()
+    public List<Vector3> tempFinal = new List<Vector3>();
+    float x;
+    float y;
+    float z;
+    public void RemoveDuple2(List<Vector3>list)//버텍스를 생성하면서 그점을 매개변수로 받아서 생성후 위치 기준으로 처리해볼것
     {
+        tempFinal = list;
         Debug.Log(vertexs_RemoveDuple.Count);
-        for(int i=0; i<vertexs_RemoveDuple.Count;i++)
+        for(int i=0; i< tempFinal.Count;i++)
         {
             nextVector = Vector3.zero;
-            for(int k=0; k<vertexs_RemoveDuple.Count; k++)
+            for(int k=0; k< tempFinal.Count; k++)
             {
-                nextVector = vertexs_RemoveDuple[k];
-                if (Mathf.Approximately(vertexs_RemoveDuple[i].x, nextVector.x))
+                nextVector = tempFinal[k];
+                if (Mathf.Abs(tempFinal[i].x - nextVector.x) < 0.005f)
                 {
-                    nextVector.x = vertexs_RemoveDuple[i].x;
+                    
+                    x = tempFinal[i].x;
+                    Debug.Log(x);
                 }
-                if (Mathf.Approximately(vertexs_RemoveDuple[i].y, nextVector.y))
+                else
                 {
-                    nextVector.y = vertexs_RemoveDuple[i].y;
+                    x = nextVector.x;
                 }
-                if (Mathf.Approximately(vertexs_RemoveDuple[i].z, nextVector.z))
+                if (Mathf.Abs(tempFinal[i].y - nextVector.y) < 0.005f)
                 {
-                    nextVector.z = vertexs_RemoveDuple[i].z;
+                   
+                        y = tempFinal[i].y;
+                }
+                else
+                {
+                    y = nextVector.y;
+                }
+                if (Mathf.Abs(tempFinal[i].z - nextVector.z) < 0.005f)
+                {
+                    
+                        z = tempFinal[i].z;
+                }
+                else
+                {
+                    z = nextVector.z;
                 }
                 Debug.Log("바뀌기 전값" + vertexs_RemoveDuple[k]);
-                vertexs_RemoveDuple[k] = nextVector;
+                tempFinal[k] = new Vector3(x, y, z);
                 Debug.Log("바꿀값" + nextVector);
             }
            
         }
         finalVectors.Clear();
-        Debug.Log("넣기전" +vertexs_RemoveDuple.Count);
-        for (int i = 0; i<vertexs_RemoveDuple.Count;i++)
+        Debug.Log("넣기전" + tempFinal.Count);
+        for (int i = 0; i< tempFinal.Count;i++)
         {
-            if(finalVectors.Contains(vertexs_RemoveDuple[i]))
+            if(finalVectors.Contains(tempFinal[i]))
             {
 
             }
             else
             {
                 Debug.Log("넣는다");
-                finalVectors.Add(vertexs_RemoveDuple[i]);
+                finalVectors.Add(tempFinal[i]);
             }
         }
         MakeVertex2();
@@ -221,7 +244,7 @@ public class Vectexs : MonoBehaviour
             finalVectors.RemoveAt(removeIndex2[k] - removeCnt);
             removeCnt++;
         }
-        edgeFind = true;
+        //edgeFind = true;
         CheckFigure(); //도형 판정
     }
     public void MakeVertex()
@@ -267,7 +290,7 @@ public class Vectexs : MonoBehaviour
             vertexs_RemoveDuple.RemoveAt(removeIndex[k]-removeCnt);
             removeCnt++;
         }
-        //edgeFind = true;
+        edgeFind = true;
         //CheckFigure(); //도형 판정
     }
     public void ThrowObj()
@@ -305,19 +328,19 @@ public class Vectexs : MonoBehaviour
                 {
                     msg = "자른 단면은 직사각형 입니다.";
                 }
-                else if(isTop == false && isBotum == false)
+                else if(isTop == false && isBotum == false && finalVectors.Count >7)
                 {
-                    if(finalVectors.Count !=4)
+                    //if(finalVectors.Count !=4)
                     msg = "자른 단면은 원 입니다.";
                 }
-                else if((isTop == true && isBotum == false)&& finalVectors.Count != 4 ||
-                    (isTop == false && isBotum == true) && finalVectors.Count != 4)
+                else if((isTop == true && isBotum == false&& finalVectors.Count != 4) ||
+                    (isTop == false && isBotum == true && finalVectors.Count != 4))
                 {
                     msg = "자른 단면은 포물선 입니다.";
                 }
                 else
                 {
-
+                    msg = "사각형도 아니고 원도 아니고 포물선도 아니다";
                 }
                 isTop = false;
                 isBotum = false;

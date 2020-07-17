@@ -228,21 +228,24 @@ public class Ball : MonoBehaviour
         obj.transform.rotation = Quaternion.Slerp(obj.transform.rotation, Quaternion.LookRotation(-centerEye.transform.forward), Time.deltaTime * 4.0f);
     }
     List<GameObject> tempedge = new List<GameObject>();//생성된 꼭지점을 담아둘 임시 리스트
+    List<Vector3> temppos = new List<Vector3>();
     bool templistFull = false; //임시리스트가 다 찼음을 알림
     bool templistLocate = false;
     //bool exceptrotate = false;
     public void FindEdge()
     {
-        for (int i = 0; i < Vectexs.Get.finalVectors.Count; i++)
+        for (int i = 0; i < Vectexs.Get.vertexs_RemoveDuple.Count; i++)
         {
             //Vectexs.Get.vertexs_RemoveDuple[i]
             //Vector3 edgepos;
             //edgepos.x = Vectexs.Get.vertexs_RemoveDuple[i].x;
             //edgepos.y = Vectexs.Get.vertexs_RemoveDuple[i].y+0.5f;
             //edgepos.z = Vectexs.Get.vertexs_RemoveDuple[i].z;
-            tempedge.Add(Instantiate(edge, Vectexs.Get.finalVectors[i], Quaternion.identity));
+            tempedge.Add(Instantiate(edge, Vectexs.Get.vertexs_RemoveDuple[i], Quaternion.identity));
+            temppos.Add(tempedge[i].transform.position);
         }
         templistFull = true;
+        Vectexs.Get.RemoveDuple2(temppos);
     }
     public void EdgePosLocate()
     {
@@ -252,6 +255,7 @@ public class Ball : MonoBehaviour
         for (int i=0; i<tempedge.Count;i++)
         {
             tempedge[i].transform.SetParent(edgeobj.transform);
+            
         }
         templistLocate = true;
         //edgeobj.transform.rotation = obj.transform.rotation;//leftSideRoot의 회전값과 일치 시켜준다?
