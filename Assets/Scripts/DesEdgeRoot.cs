@@ -9,7 +9,7 @@ public class DesEdgeRoot : MonoBehaviour
     {
         Invoke("Desobj", 3.0f);
     }
- public void Desobj()
+    public void Desobj()
     {
         Destroy(this.gameObject);
     }

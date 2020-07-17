@@ -143,7 +143,7 @@ public class Vectexs : MonoBehaviour
     public void RemoveDuple2(List<Vector3>list)//버텍스를 생성하면서 그점을 매개변수로 받아서 생성후 위치 기준으로 처리해볼것
     {
         tempFinal = list;
-        Debug.Log(vertexs_RemoveDuple.Count);
+        //Debug.Log(vertexs_RemoveDuple.Count);
         for(int i=0; i< tempFinal.Count;i++)
         {
             nextVector = Vector3.zero;
@@ -154,7 +154,7 @@ public class Vectexs : MonoBehaviour
                 {
                     
                     x = tempFinal[i].x;
-                    Debug.Log(x);
+                    //Debug.Log(x);
                 }
                 else
                 {
@@ -178,14 +178,14 @@ public class Vectexs : MonoBehaviour
                 {
                     z = nextVector.z;
                 }
-                Debug.Log("바뀌기 전값" + vertexs_RemoveDuple[k]);
+                //Debug.Log("바뀌기 전값" + vertexs_RemoveDuple[k]);
                 tempFinal[k] = new Vector3(x, y, z);
-                Debug.Log("바꿀값" + nextVector);
+                //Debug.Log("바꿀값" + nextVector);
             }
            
         }
         finalVectors.Clear();
-        Debug.Log("넣기전" + tempFinal.Count);
+        //Debug.Log("넣기전" + tempFinal.Count);
         for (int i = 0; i< tempFinal.Count;i++)
         {
             if(finalVectors.Contains(tempFinal[i]))
@@ -194,7 +194,7 @@ public class Vectexs : MonoBehaviour
             }
             else
             {
-                Debug.Log("넣는다");
+                //Debug.Log("넣는다");
                 finalVectors.Add(tempFinal[i]);
             }
         }
@@ -245,7 +245,8 @@ public class Vectexs : MonoBehaviour
             removeCnt++;
         }
         //edgeFind = true;
-        CheckFigure(); //도형 판정
+        //CheckFigure(); //도형 판정
+        CheckJudge();
     }
     public void MakeVertex()
     {
@@ -293,10 +294,19 @@ public class Vectexs : MonoBehaviour
         edgeFind = true;
         //CheckFigure(); //도형 판정
     }
+    public int throwindex;
     public void ThrowObj()
     {
-        //Debug.Log("이동");
-        throwObj[0].transform.position = Vector3.MoveTowards(throwObj[0].transform.position, objcenter.position, 10 * Time.deltaTime);
+        for(int i=0;i<throwObj.Count;i++)
+        {
+            if(throwObj[i].GetComponent<Ball>().objnum == MissionManager.Get.nowMission)
+            {
+                throwindex = i;
+                throwObj[i].GetComponent<Ball>().enabled = true;
+            }
+        }
+        Debug.Log(throwindex + "번쨰 도형");
+        throwObj[throwindex].transform.position = Vector3.MoveTowards(throwObj[throwindex].transform.position, objcenter.position, 10 * Time.deltaTime);
     }
     /// <summary>
     /// 0번큐브 1번 실린더 2번 원뿔 3번 정사면체 4번 정팔면체
@@ -310,11 +320,11 @@ public class Vectexs : MonoBehaviour
                 
                 if(finalVectors.Count==3)
                 {
-                    TriangleCheck();
+                   
                 }
                 else if (finalVectors.Count == 4)
                 {
-                    Square();
+                   
                 }
                 else
                 {
@@ -374,64 +384,168 @@ public class Vectexs : MonoBehaviour
                 break;
         }
     }
-    public void TriangleCheck()
+    public void CheckJudge()
     {
-        //절대값으로 각 점간의 길이 구하기
-        float a = Mathf.Abs((finalVectors[0] - finalVectors[1]).sqrMagnitude);
-        float b = Mathf.Abs((finalVectors[0] - finalVectors[2]).sqrMagnitude);
-        float c = Mathf.Abs((finalVectors[1] - finalVectors[2]).sqrMagnitude);
-        //각 길이에 10씩 곱하기
-        a = a * 10;
-        b = b * 10;
-        c = c * 10;
-        Debug.Log(a);
-        Debug.Log(b);
-        Debug.Log(c);
-        if(Mathf.Abs(a-b)<0.5 && Mathf.Abs(a - c) < 0.5 && Mathf.Abs(c - b) < 0.5)
+        switch(MissionManager.Get.judgment)
         {
-            msg = "자른 단면은 정삼각형 입니다.";
+            case 0:
+                if(finalVectors.Count==3)
+                {
+                    Debug.Log("성공");
+                    MissionManager.Get.nowScore += 100;
+                }
+                else
+                {
+
+                }
+                ResetBool();
+                break;
+            case 1:
+                if (finalVectors.Count == 4)
+                {
+                    Debug.Log("성공");
+                    MissionManager.Get.nowScore += 100;
+                }
+                else if((isTop == true && isBotum == true) || finalVectors.Count == 4)
+                    {
+                    Debug.Log("성공");
+                    MissionManager.Get.nowScore += 100;
+                }
+                    else
+                {
+
+                }
+                ResetBool();
+                break;
+            case 2:
+                if(finalVectors.Count ==5 )
+                {
+                    Debug.Log("성공");
+                    MissionManager.Get.nowScore += 100;
+                }
+                else
+                {
+
+                }
+                ResetBool();
+                break;
+            case 3:
+                if(finalVectors.Count == 6)
+                {
+                    Debug.Log("성공");
+                    MissionManager.Get.nowScore += 100;
+                }
+                else
+                {
+
+                }
+                ResetBool();
+                break;
+            case 4:
+                if (isTop == false && isBotum == false && finalVectors.Count > 7)
+                {
+                    Debug.Log("성공");
+                    MissionManager.Get.nowScore += 100;
+                }
+                else if(isconePoint == false && isconePlat == false)
+                {
+                    Debug.Log("성공");
+                    MissionManager.Get.nowScore += 100;
+                }
+                else
+                {
+
+                }
+                ResetBool();
+                break;
+            case 5:
+                if (isconePoint == false && isconePlat == true)
+                {
+                    Debug.Log("성공");
+                    MissionManager.Get.nowScore += 100;
+                }
+                else if ((isTop == true && isBotum == false && finalVectors.Count != 4) ||
+                            (isTop == false && isBotum == true && finalVectors.Count != 4))
+                {
+                    Debug.Log("성공");
+                    MissionManager.Get.nowScore += 100;
+                }
+                else
+                {
+
+                }
+                ResetBool();
+                break;
         }
-        else
-        {
+    }
+    public void ResetBool()
+    {
+        isTop = false;
+        isBotum = false;
+        isconePoint = false;
+        isconePlat = false;
+        isStartPoint = false;
+        isEndPoint = false;
+        //MissionManager.Get.isMissionOn = true;
+    }
+    //public void TriangleCheck()
+    //{
+    //    //절대값으로 각 점간의 길이 구하기
+    //    float a = Mathf.Abs((finalVectors[0] - finalVectors[1]).sqrMagnitude);
+    //    float b = Mathf.Abs((finalVectors[0] - finalVectors[2]).sqrMagnitude);
+    //    float c = Mathf.Abs((finalVectors[1] - finalVectors[2]).sqrMagnitude);
+    //    //각 길이에 10씩 곱하기
+    //    a = a * 10;
+    //    b = b * 10;
+    //    c = c * 10;
+    //    Debug.Log(a);
+    //    Debug.Log(b);
+    //    Debug.Log(c);
+    //    if(Mathf.Abs(a-b)<0.5 && Mathf.Abs(a - c) < 0.5 && Mathf.Abs(c - b) < 0.5)
+    //    {
+    //        msg = "자른 단면은 정삼각형 입니다.";
+    //    }
+    //    else
+    //    {
             
-            if(Mathf.Abs(a - b) < 0.5 && Mathf.Abs(a - c) < 1 && Mathf.Abs(b - c)<1)
-            {
-                msg = "자른 단면은 이등변 삼각형 입니다.";
-            }
-            else
-            {
-                msg = "자른 단면은 삼각형 입니다.";
-            }
-        }
-    }
-    public void Square()
-    {
-        float a= Mathf.Abs((finalVectors[1] - finalVectors[0]).sqrMagnitude);
-        float b = Mathf.Abs((finalVectors[2] - finalVectors[0]).sqrMagnitude);
-        float c = Mathf.Abs((finalVectors[3] - finalVectors[1]).sqrMagnitude);
-        float d = Mathf.Abs((finalVectors[3] - finalVectors[2]).sqrMagnitude);
-        //각 길이에 10씩 곱하기 
-        a = a * 10;
-        b = b * 10;
-        c = c * 10;
-        d = d * 10;
-        if(Mathf.Abs(a-d)<0.5 && Mathf.Abs(b-c)<0.5 && Mathf.Abs(a-c)<0.5)
-        {
-            msg = "자른 단면은 정사각형 입니다.";
-        }
-        else if(Mathf.Abs(a - d) > 0.5 && Mathf.Abs(b - c) < 0.5 && Mathf.Abs(a - b) > 0.5)
-        {
-            msg = "자른 단면은 평행사변형 입니다.";
-        }
-        else if(Mathf.Abs(a - b) > 0.5 && Mathf.Abs(a - c) > 0.5 && Mathf.Abs(a - d) > 0.5&& Mathf.Abs(b - d) > 0.5)
-        {
-            msg = "자른 단면은 사다리꼴 입니다.";
-        }
-        else
-        {
-            msg = "자른 단면은 직각 삼각형 입니다.";
-        }
-    }
+    //        if(Mathf.Abs(a - b) < 0.5 && Mathf.Abs(a - c) < 1 && Mathf.Abs(b - c)<1)
+    //        {
+    //            msg = "자른 단면은 이등변 삼각형 입니다.";
+    //        }
+    //        else
+    //        {
+    //            msg = "자른 단면은 삼각형 입니다.";
+    //        }
+    //    }
+    //}
+    //public void Square()
+    //{
+    //    float a= Mathf.Abs((finalVectors[1] - finalVectors[0]).sqrMagnitude);
+    //    float b = Mathf.Abs((finalVectors[2] - finalVectors[0]).sqrMagnitude);
+    //    float c = Mathf.Abs((finalVectors[3] - finalVectors[1]).sqrMagnitude);
+    //    float d = Mathf.Abs((finalVectors[3] - finalVectors[2]).sqrMagnitude);
+    //    //각 길이에 10씩 곱하기 
+    //    a = a * 10;
+    //    b = b * 10;
+    //    c = c * 10;
+    //    d = d * 10;
+    //    if(Mathf.Abs(a-d)<0.5 && Mathf.Abs(b-c)<0.5 && Mathf.Abs(a-c)<0.5)
+    //    {
+    //        msg = "자른 단면은 정사각형 입니다.";
+    //    }
+    //    else if(Mathf.Abs(a - d) > 0.5 && Mathf.Abs(b - c) < 0.5 && Mathf.Abs(a - b) > 0.5)
+    //    {
+    //        msg = "자른 단면은 평행사변형 입니다.";
+    //    }
+    //    else if(Mathf.Abs(a - b) > 0.5 && Mathf.Abs(a - c) > 0.5 && Mathf.Abs(a - d) > 0.5&& Mathf.Abs(b - d) > 0.5)
+    //    {
+    //        msg = "자른 단면은 사다리꼴 입니다.";
+    //    }
+    //    else
+    //    {
+    //        msg = "자른 단면은 직각 삼각형 입니다.";
+    //    }
+    //}
     
 
 }

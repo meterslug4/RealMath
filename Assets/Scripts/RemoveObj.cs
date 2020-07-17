@@ -8,6 +8,7 @@ public class RemoveObj : MonoBehaviour
     {
         if (collision.collider.CompareTag("Map"))
         {
+            MissionManager.Get.isTimeFlow = false;
             this.gameObject.SetActive(false);
         }
     }

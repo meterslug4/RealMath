@@ -17,7 +17,7 @@ public class Ball : MonoBehaviour
     public GameObject leftSideRoot; //생성할 프리팹
     public GameObject edgeRoot;
     public GameObject edge;
-    GameObject edgeobj;//생성한 꼭지점의 부모 오브젝트가 될 게임 오브젝트
+    public GameObject edgeobj;//생성한 꼭지점의 부모 오브젝트가 될 게임 오브젝트
     public Vector3 startPos;
     public Vector3 endPos;
     public Vector3 angle;
@@ -40,7 +40,7 @@ public class Ball : MonoBehaviour
     GameObject obj;//leftSideRoot 을 담을 변수
     GameObject cameraPos;
     Transform centerEye;
-
+    
     
     //percent= -0.5 < percent <0.5 의 값들중하나로 지정하면될듯함.
     //public float percent=0.0f;
@@ -65,7 +65,6 @@ public class Ball : MonoBehaviour
 
     void Update()
     {
-        // centerEye = cameraPos.transform.GetChild(0).GetChild(1).transform;
         //꼭지점 그리기
         if (Vectexs.Get.edgeFind == true )
         {
@@ -75,49 +74,33 @@ public class Ball : MonoBehaviour
         }
         if (isCutStart == true && isCutend == true && isCutting == true)
         {
+            
             isCutStart = false;
             isCutend = false;
-            //Instantiate(Obj, startPos, Quaternion.identity);
-            //Instantiate(end, endPos, Quaternion.identity);
-            //startPos = transform.TransformDirection(startPos);
             center = (startPos + endPos) * 0.5f;
-            //Instantiate(Obj, center, Quaternion.identity);
-            //totaldir = endPos - startPos;
-            //Resources.Load("CenterPos")
-            //go = Instantiate(Resources.Load("CenterPos") as GameObject, totaldir, Quaternion.identity);
-            //go_ = Instantiate(Resources.Load("CenterPos") as GameObject, totaldir, Quaternion.identity);
-            //go.transform.forward = go.transform.TransformDirection(center - endPos);
-            //.transform.Rotate(0, 0.01f, 0);
-
             MakeAgle();
-            //Instantiate(checkStart,startPos,Quaternion.identity);
-            //Instantiate(checkEnd,endPos,Quaternion.identity);
-            //Instantiate(checkCenter,center,Quaternion.identity);
+
             MeshCollider ms = GetComponent<MeshCollider>();
             Destroy(ms);
             Cut();
         }
         if (cutFinish == true)
         {
-
             MoveObject();
         }
         if(templistFull == true)
         {
             templistFull = false;
+            Debug.Log("꼭지점 위치시킴");
             EdgePosLocate();//꼭지점 배치시킴
         }
         if(templistLocate == true)
         {
+            Debug.Log("꼭지점 부모설정및 재배치");
             EdgePosLocate2();
-            //Invoke("Delay", 0.5f);
+           
         }
-        //if (exceptrotate == true && delay == true)
-        //{
-        //    exceptrotate = false;
-        //    ExceptRotate();
-        //    //Invoke("ExceptRotate", 0.3f);
-        //}
+
     }
 
     public void Cut()
@@ -151,6 +134,7 @@ public class Ball : MonoBehaviour
     }
     public void MoveObject()
     {
+        
         //잘린 오브젝트가 순간이동이 아니라 서서히 이동하도록
         //gameObjects[0].transform.position += -angle * MoveTime * Time.deltaTime * MoveSpeed;
         if (isrotate == true)
@@ -165,20 +149,17 @@ public class Ball : MonoBehaviour
         GameObject scanner = GameObject.Find("Scanner");
         scanner.GetComponent<MeshRenderer>().enabled = true;
         gameObjects[1].transform.position += angle * MoveTime * Time.deltaTime * MoveSpeed;
-        //iTween.MoveTo(gameObjects[1],iTween.Hash("y",10.0f,"time",3.0f)); //절대좌표 이동
-        //iTween.MoveBy(gameObjects[1],iTween.Hash("y",10.0f,"time",2.0f,"delay",3.0f)); //시ㅏ대 좌표 이동
-        //iTween.MoveFrom(gameObjects[1],iTween.Hash("y",200.0f,"time",2.0f,"dealay",5.0f)); //y축의 200위치에서 내위치로
         currMoveTime += Time.deltaTime; //시간의 흐흠을 체크한다.
         if (currMoveTime > MoveTime)
         {
             gameObjects[0].SetActive(false);
-            Vectexs.Get.throwObj.RemoveAt(0);//첫번째꺼를 지운다
+            Vectexs.Get.throwObj.RemoveAt(Vectexs.Get.throwindex);//첫번째꺼를 지운다
 
             //1초이상이 되면?(1초 정도만 오브젝트가 움직이게 해서 서로 떨어 뜨려 놓는다)
             cutFinish = false;//다시 원래 상태로 돌린다 
             if (cutFinish == false)
             {
-                Invoke("ResetObj", 1.0f);
+                Invoke("ResetObj", 2.0f);
                 scanner.GetComponent<MeshRenderer>().enabled = false;
 
             }
@@ -197,7 +178,7 @@ public class Ball : MonoBehaviour
         //dir2_ = go_.transform.forward - center;
         dir2 = dir2_; //+ go.transform.right * 0.1f;
         angle = Vector3.Cross(dir1, dir2);
-        Debug.Log(angle);
+        //Debug.Log(angle);
     }
 
     public void ResetObj()
@@ -222,13 +203,12 @@ public class Ball : MonoBehaviour
         {
             Vectexs.Get.ismakeOctahedron = true;
         }
+        MissionManager.Get.isMissionOn = true;
     }
     //gameObjects[0] 잘린 오브젝트의 원본을 회전시키기
     public void RotateLeftSide(GameObject obj)
     {
         gameObjects[0].transform.SetParent(obj.transform);//새로만든 오브젝트에 자식으로 넣기
-                                                          //centerEye
-
         obj.transform.rotation = Quaternion.Slerp(obj.transform.rotation, Quaternion.LookRotation(-centerEye.transform.forward), Time.deltaTime * 4.0f);
     }
     List<GameObject> tempedge = new List<GameObject>();//생성된 꼭지점을 담아둘 임시 리스트
@@ -240,11 +220,6 @@ public class Ball : MonoBehaviour
     {
         for (int i = 0; i < Vectexs.Get.vertexs_RemoveDuple.Count; i++)
         {
-            //Vectexs.Get.vertexs_RemoveDuple[i]
-            //Vector3 edgepos;
-            //edgepos.x = Vectexs.Get.vertexs_RemoveDuple[i].x;
-            //edgepos.y = Vectexs.Get.vertexs_RemoveDuple[i].y+0.5f;
-            //edgepos.z = Vectexs.Get.vertexs_RemoveDuple[i].z;
             tempedge.Add(Instantiate(edge, Vectexs.Get.vertexs_RemoveDuple[i], Quaternion.identity));
             temppos.Add(tempedge[i].transform.position);
         }
@@ -253,40 +228,28 @@ public class Ball : MonoBehaviour
     }
     public void EdgePosLocate()
     {
-        //점찍고 나서 스케일과 위치를 다시 잡기위해서 점을 다 찍은후에 실행되야한다
-        edgeobj = Instantiate(edgeRoot, Vector3.zero, Quaternion.identity);
-        edgeobj.transform.rotation = Quaternion.LookRotation(angle);
-        for (int i=0; i<tempedge.Count;i++)
-        {
-            tempedge[i].transform.SetParent(edgeobj.transform);
-            
-        }
-        templistLocate = true;
+
+            Debug.Log("edgeobj 생성함");
+            //점찍고 나서 스케일과 위치를 다시 잡기위해서 점을 다 찍은후에 실행되야한다
+            //Vectexs.Get.throwObj[Vectexs.Get.throwindex].GetComponent<Ball>().edgeobj
+            edgeobj = Instantiate(edgeRoot, Vector3.zero, Quaternion.identity);
+            edgeobj.transform.rotation = Quaternion.LookRotation(angle);
+            for (int i = 0; i < tempedge.Count; i++)
+            {
+                tempedge[i].transform.SetParent(edgeobj.transform);
+                //Debug.Log(edgeobj);
+            }
+            templistLocate = true;
+            Debug.Log(templistLocate);
+        
         //edgeobj.transform.rotation = obj.transform.rotation;//leftSideRoot의 회전값과 일치 시켜준다?
     }
     public void EdgePosLocate2()
     {
-        //edgeobj.transform.forward = obj.transform.forward;
-        //edgeobj.transform.SetParent(obj.transform);
-        edgeobj.transform.position = obj.transform.position;
-        edgeobj.transform.rotation = Quaternion.Slerp(obj.transform.rotation, Quaternion.LookRotation(-centerEye.transform.forward), Time.deltaTime * 4.0f);
-        edgeobj.transform.localScale = gameObjects[0].transform.localScale;
-        //if (objnum == 2)//원뿔  정팔면체인경우 -89.98 만큼 틀어져 있음 (블렌터 좌표 마출려고하다보니)
-        //{
-        //    //z축 기준으로 틀어진 만큼 돌린다
-        //    exceptrotate = true;
-        //}
+            Debug.Log(edgeobj);
+            edgeobj.transform.position = obj.transform.position;
+            edgeobj.transform.rotation = Quaternion.Slerp(obj.transform.rotation, Quaternion.LookRotation(-centerEye.transform.forward), Time.deltaTime * 4.0f);
+            edgeobj.transform.localScale = gameObjects[0].transform.localScale;
     }
-    //public void ExceptRotate()
-    //{
-    //    Vector3 rot = edgeobj.transform.eulerAngles;
-    //    //edgeobj.transform.SetParent(obj.transform);
-    //    edgeobj.transform.rotation = Quaternion.Euler(rot.x, rot.y, rot.z + 89.98f);
 
-    //}
-    //bool delay = false;
-    //public void Delay()
-    //{
-    //    delay = true;
-    //}
 }

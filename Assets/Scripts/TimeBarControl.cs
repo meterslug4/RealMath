@@ -34,12 +34,20 @@ public class TimeBarControl : MonoBehaviour
 
     void Update()
     {
-        SkinnedMeshRenderer render = robot.GetComponent<SkinnedMeshRenderer>();
-        Material mat = render.material;
-        time += Time.deltaTime * 0.2f;
-        Color goRed = Color.Lerp(Color.blue, Color.red, time);
-        mat.SetColor("_Color", goRed);
+        //SkinnedMeshRenderer render = robot.GetComponent<SkinnedMeshRenderer>();
+        //Material mat = render.material;
+        //time += Time.deltaTime * 0.2f;
+        //Color goRed = Color.Lerp(Color.blue, Color.red, time);
+        //mat.SetColor("_Color", goRed);
+        if(MissionManager.Get.isTimeFlow == true)
+        {
+            TimeCount();
+        }
 
+    }
+
+    public void TimeCount()
+    {
         playTimeCurrent -= 1 * Time.deltaTime;
 
         TimeBar.fillAmount = playTimeCurrent / playTimeMax;
@@ -58,7 +66,6 @@ public class TimeBarControl : MonoBehaviour
             Invoke("ChangeStartScene", 3.0f);
         }
     }
-
     public void ChangeStartScene()
     {
         SceneManager.LoadScene("01.StartScene");
