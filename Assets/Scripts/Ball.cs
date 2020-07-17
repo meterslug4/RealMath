@@ -162,6 +162,8 @@ public class Ball : MonoBehaviour
             Debug.Log("빈게임 오브젝트를 법선벡터방향으로 회전");
         }
         RotateLeftSide(obj);
+        GameObject scanner = GameObject.Find("Scanner");
+        scanner.GetComponent<MeshRenderer>().enabled = true;
         gameObjects[1].transform.position += angle * MoveTime * Time.deltaTime * MoveSpeed;
         //iTween.MoveTo(gameObjects[1],iTween.Hash("y",10.0f,"time",3.0f)); //절대좌표 이동
         //iTween.MoveBy(gameObjects[1],iTween.Hash("y",10.0f,"time",2.0f,"delay",3.0f)); //시ㅏ대 좌표 이동
@@ -177,6 +179,8 @@ public class Ball : MonoBehaviour
             if (cutFinish == false)
             {
                 Invoke("ResetObj", 1.0f);
+                scanner.GetComponent<MeshRenderer>().enabled = false;
+
             }
         }
     }

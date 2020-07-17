@@ -4005,7 +4005,6 @@ MonoBehaviour:
   score: {fileID: 817112863}
   mission: {fileID: 40042764385906092}
   success: {fileID: 1416028199}
-  cubeMap: {fileID: 4771953662109391508, guid: 392667f75ecb796439a867b73461c714, type: 3}
 --- !u!4 &594629747
 Transform:
   m_ObjectHideFlags: 0

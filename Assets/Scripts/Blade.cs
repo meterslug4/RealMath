@@ -5,11 +5,16 @@ using UnityEngine;
 public class Blade : MonoBehaviour
 {
     public GameObject subblade;
+    public GameObject cutEffect;
+    public GameObject scanner;
+    Vector3 stayPos;
 
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Cutable") == true)
         {
+            stayPos = other.ClosestPoint(transform.position);
+            Instantiate(cutEffect, stayPos, Quaternion.identity);
             OVRInput.SetControllerVibration(0.1f, 0.9f, OVRInput.Controller.RTouch);
         }
     }
