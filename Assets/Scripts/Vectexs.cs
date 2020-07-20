@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 
+
 public class Vectexs : MonoBehaviour
 {
     
@@ -32,6 +33,8 @@ public class Vectexs : MonoBehaviour
     public List<GameObject> throwObj;
     public int currentFigure;
     public string msg;
+    public GameObject success;
+    public GameObject fail;
     private void Awake()
     {
         if (m_Instance == null)
@@ -393,10 +396,11 @@ public class Vectexs : MonoBehaviour
                 {
                     Debug.Log("성공");
                     MissionManager.Get.nowScore += 100;
+                    success.SetActive(true);
                 }
                 else
                 {
-
+                    fail.SetActive(true);
                 }
                 ResetBool();
                 break;
@@ -405,15 +409,17 @@ public class Vectexs : MonoBehaviour
                 {
                     Debug.Log("성공");
                     MissionManager.Get.nowScore += 100;
+                    success.SetActive(true);
                 }
                 else if((isTop == true && isBotum == true) || finalVectors.Count == 4)
                     {
                     Debug.Log("성공");
                     MissionManager.Get.nowScore += 100;
+                    success.SetActive(true);
                 }
                     else
                 {
-
+                    fail.SetActive(true);
                 }
                 ResetBool();
                 break;
@@ -422,10 +428,11 @@ public class Vectexs : MonoBehaviour
                 {
                     Debug.Log("성공");
                     MissionManager.Get.nowScore += 100;
+                    success.SetActive(true);
                 }
                 else
                 {
-
+                    fail.SetActive(true);
                 }
                 ResetBool();
                 break;
@@ -434,10 +441,11 @@ public class Vectexs : MonoBehaviour
                 {
                     Debug.Log("성공");
                     MissionManager.Get.nowScore += 100;
+                    success.SetActive(true);
                 }
                 else
                 {
-
+                    fail.SetActive(true);
                 }
                 ResetBool();
                 break;
@@ -446,15 +454,17 @@ public class Vectexs : MonoBehaviour
                 {
                     Debug.Log("성공");
                     MissionManager.Get.nowScore += 100;
+                    success.SetActive(true);
                 }
                 else if(isconePoint == false && isconePlat == false)
                 {
                     Debug.Log("성공");
                     MissionManager.Get.nowScore += 100;
+                    success.SetActive(true);
                 }
                 else
                 {
-
+                    fail.SetActive(true);
                 }
                 ResetBool();
                 break;
@@ -463,16 +473,18 @@ public class Vectexs : MonoBehaviour
                 {
                     Debug.Log("성공");
                     MissionManager.Get.nowScore += 100;
+                    success.SetActive(true);
                 }
                 else if ((isTop == true && isBotum == false && finalVectors.Count != 4) ||
                             (isTop == false && isBotum == true && finalVectors.Count != 4))
                 {
                     Debug.Log("성공");
                     MissionManager.Get.nowScore += 100;
+                    success.SetActive(true);
                 }
                 else
                 {
-
+                    fail.SetActive(true);
                 }
                 ResetBool();
                 break;

@@ -35,6 +35,8 @@ public class MissionManager : MonoBehaviour
     public bool isMissionOn = true;
     public bool isTimeFlow = false;
     public int nowScore;
+    public GameObject success;
+    public GameObject fail;
 
     void Start()
     {
@@ -49,6 +51,9 @@ public class MissionManager : MonoBehaviour
         if(isMissionOn==true)
         {
            isMissionOn = false;
+            success.SetActive(false);
+            fail.SetActive(false);
+
             MissionOn();
         }
     }
