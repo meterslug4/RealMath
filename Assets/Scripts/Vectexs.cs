@@ -33,6 +33,10 @@ public class Vectexs : MonoBehaviour
     public List<GameObject> throwObj;
     public int currentFigure;
     public string msg;
+    public Vector3 _startPos;//판정을 위해서 시작점을 저장 Ball 스크립트에서 받아옴
+    public Vector3 _endPos;//판정을 위해서 끝점을 저장 Ball스크립트에서 받아옴
+    public Vector3 _totaldir;//판정을 위해서 칼의 전체 진행방향을 Ball스크립트에서 받아옴
+    float Angle;//두 벡터사이의 각을 구하기 위해 원뿔에서 포물선을 구할때 사용하기 위함
     public GameObject success;
     public GameObject fail;
     private void Awake()
@@ -296,6 +300,7 @@ public class Vectexs : MonoBehaviour
         }
         edgeFind = true;
         //CheckFigure(); //도형 판정
+        CheckJudge();
     }
     public int throwindex;
     public void ThrowObj()
@@ -315,176 +320,149 @@ public class Vectexs : MonoBehaviour
     /// 0번큐브 1번 실린더 2번 원뿔 3번 정사면체 4번 정팔면체
     /// 도형 모양을 체크하기 위함
     /// </summary>
-    public void CheckFigure() 
-    {
-        switch(currentFigure)
-        {
-            case 0:
-                
-                if(finalVectors.Count==3)
-                {
-                   
-                }
-                else if (finalVectors.Count == 4)
-                {
-                   
-                }
-                else
-                {
-                    msg = "자른 단면은 " + finalVectors.Count + "각형입니다.";
-                }
 
-                    break;
-            case 1:
-               
-                if((isTop == true && isBotum == true) || finalVectors.Count==4)
-                {
-                    msg = "자른 단면은 직사각형 입니다.";
-                }
-                else if(isTop == false && isBotum == false && finalVectors.Count >7)
-                {
-                    //if(finalVectors.Count !=4)
-                    msg = "자른 단면은 원 입니다.";
-                }
-                else if((isTop == true && isBotum == false&& finalVectors.Count != 4) ||
-                    (isTop == false && isBotum == true && finalVectors.Count != 4))
-                {
-                    msg = "자른 단면은 포물선 입니다.";
-                }
-                else
-                {
-                    msg = "사각형도 아니고 원도 아니고 포물선도 아니다";
-                }
-                isTop = false;
-                isBotum = false;
-                break;
-            case 2:
-                if(isconePoint == true && isconePlat == true)//원뿔의 꼭지점과 바닥을 건드린경우
-                {
-                    msg = "자른 단면은 삼각형입니다";
-                }
-                else if(isconePoint == false && isconePlat == true)//원뿔의 꼭지점을 안건드리고 바닥만 건드린경우
-                {
-                    msg = "자른 단면은 포물선입니다";//원과 타원 포물선을 구분해야함
-                }
-                else if(isconePoint == false && isconePlat == false) //꼭지점도 안지나고 바닥도 안지난경우는 원이 나올것이다
-                {
-                    msg = "자른 단면은 원 입니다.";
-                }
-                //자르고 난후 단면 판정이 끝나면 bool 값은 원래대로
-                isconePoint = false;
-                isconePlat = false;
-                break;
-            case 3:
-                msg = "자른 단면은 " + finalVectors.Count + "각형입니다.";
-                isStartPoint = false;
-                isEndPoint = false;
-                break;
-            case 4:
-                msg = "자른 단면은 " + finalVectors.Count + "각형입니다.";
-                isStartPoint = false;
-                isEndPoint = false;
-                break;
-        }
-    }
     public void CheckJudge()
     {
-        switch(MissionManager.Get.judgment)
+        Debug.Log("도형판정");
+        switch (MissionManager.Get.judgment)
         {
-            case 0:
-                if(finalVectors.Count==3)
+            case 0: //삼각형 판정
+                if (finalVectors.Count == 3)
                 {
                     Debug.Log("성공");
                     MissionManager.Get.nowScore += 100;
-                    success.SetActive(true);
                 }
                 else
                 {
-                    fail.SetActive(true);
+
                 }
                 ResetBool();
                 break;
-            case 1:
+            case 1: //사각형 판정
                 if (finalVectors.Count == 4)
                 {
                     Debug.Log("성공");
                     MissionManager.Get.nowScore += 100;
-                    success.SetActive(true);
                 }
-                else if((isTop == true && isBotum == true) || finalVectors.Count == 4)
+                else if ((isTop == true && isBotum == true))
+                {
+                    Debug.Log("성공");
+                    MissionManager.Get.nowScore += 100;
+                }
+                else
+                {
+
+                }
+                ResetBool();
+                break;
+            case 2: //오각형 판정
+                if (finalVectors.Count == 5)
+                {
+                    Debug.Log("성공");
+                    MissionManager.Get.nowScore += 100;
+                }
+                else
+                {
+
+                }
+                ResetBool();
+                break;
+            case 3: //육각형 판정
+                if (finalVectors.Count == 6)
+                {
+                    Debug.Log("성공");
+                    MissionManager.Get.nowScore += 100;
+                }
+                else
+                {
+
+                }
+                ResetBool();
+                break;
+            case 4: //원판정
+                if (isTop == false && isBotum == false && finalVectors.Count > 7) //실린더 원판정
+                {
+                    if (Mathf.Abs(_startPos.y - _endPos.y) < 0.008f) //시작점과 끝점의 y 값을 비교해서 별차이가 안나면 원판정
                     {
-                    Debug.Log("성공");
-                    MissionManager.Get.nowScore += 100;
-                    success.SetActive(true);
+                        Debug.Log("성공");
+                        MissionManager.Get.nowScore += 100;
+                    }
+
                 }
-                    else
+                else if (isconePoint == false && isconePlat == false) //원뿔 원 판정
                 {
-                    fail.SetActive(true);
-                }
-                ResetBool();
-                break;
-            case 2:
-                if(finalVectors.Count ==5 )
-                {
-                    Debug.Log("성공");
-                    MissionManager.Get.nowScore += 100;
-                    success.SetActive(true);
+                    if (Mathf.Abs(_startPos.y - _endPos.y) < 0.05f)//시작점과 끝점의 y 값을 비교해서 별차이가 안나면 원판정
+                    {
+                        Debug.Log("성공");
+                        MissionManager.Get.nowScore += 100;
+                    }
+
                 }
                 else
                 {
-                    fail.SetActive(true);
+
                 }
                 ResetBool();
                 break;
-            case 3:
-                if(finalVectors.Count == 6)
-                {
-                    Debug.Log("성공");
-                    MissionManager.Get.nowScore += 100;
-                    success.SetActive(true);
-                }
-                else
-                {
-                    fail.SetActive(true);
-                }
-                ResetBool();
-                break;
-            case 4:
-                if (isTop == false && isBotum == false && finalVectors.Count > 7)
-                {
-                    Debug.Log("성공");
-                    MissionManager.Get.nowScore += 100;
-                    success.SetActive(true);
-                }
-                else if(isconePoint == false && isconePlat == false)
-                {
-                    Debug.Log("성공");
-                    MissionManager.Get.nowScore += 100;
-                    success.SetActive(true);
-                }
-                else
-                {
-                    fail.SetActive(true);
-                }
-                ResetBool();
-                break;
-            case 5:
+            case 5: //포물선 판정
+                float Dot = Vector3.Angle(Vector3.up, _totaldir);
+                Angle = Dot;
+                Debug.Log(Angle);
                 if (isconePoint == false && isconePlat == true)
                 {
-                    Debug.Log("성공");
-                    MissionManager.Get.nowScore += 100;
-                    success.SetActive(true);
+                    if (Mathf.Abs(Angle - 25) < 5) //원뿔에서의 포물선 판정
+                    {
+                        Debug.Log("성공");
+                        MissionManager.Get.nowScore += 100;
+                    }
                 }
                 else if ((isTop == true && isBotum == false && finalVectors.Count != 4) ||
                             (isTop == false && isBotum == true && finalVectors.Count != 4))
                 {
                     Debug.Log("성공");
                     MissionManager.Get.nowScore += 100;
-                    success.SetActive(true);
                 }
                 else
                 {
-                    fail.SetActive(true);
+
+                }
+                ResetBool();
+                break;
+            case 6: //쌍곡선 판정
+                ResetBool();
+                if (isconePlat == true && isconePoint == false) //원뿔에서 쌍곡선 판정
+                {
+                    if (Mathf.Abs(_startPos.x - _endPos.x) < 0.008 && Mathf.Abs(_startPos.z - _endPos.z) < 0.008)
+                    {
+                        Debug.Log("성공");
+                        MissionManager.Get.nowScore += 100;
+                    }
+                }
+                break;
+            case 7: //타원형 판정
+                if (currentFigure == 1)
+                {
+                    if (isTop == false && isBotum == false && finalVectors.Count > 7) //실린더 원판정
+                    {
+                        if (Mathf.Abs(_startPos.y - _endPos.y) >= 0.008f) //시작점과 끝점의 y 값을 비교해서 차이가 나면 타원
+                        {
+                            Debug.Log("성공");
+                            MissionManager.Get.nowScore += 100;
+                        }
+
+                    }
+                }
+                if (currentFigure == 2)
+                {
+                    if (isconePoint == false && isconePlat == false) //원뿔 원 판정
+                    {
+                        if (Mathf.Abs(_startPos.y - _endPos.y) >= 0.008f)//시작점과 끝점의 y 값을 비교해서 차이가 나면 타원
+                        {
+                            Debug.Log("성공");
+                            MissionManager.Get.nowScore += 100;
+                        }
+
+                    }
                 }
                 ResetBool();
                 break;
@@ -498,6 +476,9 @@ public class Vectexs : MonoBehaviour
         isconePlat = false;
         isStartPoint = false;
         isEndPoint = false;
+        _startPos = Vector3.zero;
+        _endPos = Vector3.zero;
+        _totaldir = Vector3.zero;
         //MissionManager.Get.isMissionOn = true;
     }
     //public void TriangleCheck()
@@ -519,7 +500,7 @@ public class Vectexs : MonoBehaviour
     //    }
     //    else
     //    {
-            
+
     //        if(Mathf.Abs(a - b) < 0.5 && Mathf.Abs(a - c) < 1 && Mathf.Abs(b - c)<1)
     //        {
     //            msg = "자른 단면은 이등변 삼각형 입니다.";
@@ -558,6 +539,6 @@ public class Vectexs : MonoBehaviour
     //        msg = "자른 단면은 직각 삼각형 입니다.";
     //    }
     //}
-    
+
 
 }
