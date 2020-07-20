@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1047439076022811254}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1, z: -0.00000073761}
-  m_LocalScale: {x: 0.7, y: 0.01, z: 0.7}
+  m_LocalScale: {x: 0.7, y: 0.05, z: 0.7}
   m_Children: []
   m_Father: {fileID: 1921936750071039361}
   m_RootOrder: 1
@@ -206,7 +206,8 @@ MonoBehaviour:
   MoveSpeed: 0.5
   MoveTime: 1.5
   isCutting: 1
-  isCutable: 0
+  dieTime: 0
+  dieflow: 0
 --- !u!64 &1921936750071039366
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -249,7 +250,7 @@ Transform:
   m_GameObject: {fileID: 3294822199234140679}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: -0.00000073761}
-  m_LocalScale: {x: 0.7, y: 0.01, z: 0.7}
+  m_LocalScale: {x: 0.7, y: 0.05, z: 0.7}
   m_Children: []
   m_Father: {fileID: 1921936750071039361}
   m_RootOrder: 0

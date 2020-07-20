@@ -127,7 +127,8 @@ MonoBehaviour:
   MoveSpeed: 0.3
   MoveTime: 0.5
   isCutting: 1
-  isCutable: 0
+  dieTime: 0
+  dieflow: 0
 --- !u!1 &3019921372108741391
 GameObject:
   m_ObjectHideFlags: 0

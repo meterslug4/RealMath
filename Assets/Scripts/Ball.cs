@@ -24,7 +24,7 @@ public class Ball : MonoBehaviour
     public Vector3 conePoint;
     //Vector3 dir1;
     //Vector3 dir2;
-    Vector3 totaldir;
+    //Vector3 totaldir;//칼의 전체 진행방향
     Vector3 dir1;
     Vector3 dir2;
     public Vector3 dir2_;
@@ -77,6 +77,9 @@ public class Ball : MonoBehaviour
             
             isCutStart = false;
             isCutend = false;
+            Vectexs.Get._startPos = startPos;//도형 판별을 위해 시작점을 넘겨준다
+            Vectexs.Get._endPos = endPos;//도형 판정을 위해 끝점을 넘겨준다
+            Vectexs.Get._totaldir = endPos - startPos;//칼이 자르고 지나간 전체 전인 진행 방향 포물선 판정 시에 필요하다
             center = (startPos + endPos) * 0.5f;
             MakeAgle();
 
@@ -91,16 +94,42 @@ public class Ball : MonoBehaviour
         if(templistFull == true)
         {
             templistFull = false;
-            Debug.Log("꼭지점 위치시킴");
+            //Debug.Log("꼭지점 위치시킴");
             EdgePosLocate();//꼭지점 배치시킴
         }
         if(templistLocate == true)
         {
-            Debug.Log("꼭지점 부모설정및 재배치");
+            //Debug.Log("꼭지점 부모설정및 재배치");
             EdgePosLocate2();
            
         }
-
+        #region 칼을 1.5초이상 대고 있으면 오브젝트 사라진다 관련 설정이나 변수 함수는 280번 라인부터
+        if (dieflow == true)
+        {
+            dieTime += Time.deltaTime;
+            if (dieTime > 1.5f)
+            {
+                dieflow = false;
+                objdes = true;
+            }
+        }
+        if(objdes == true)
+        {
+            objdes = false;
+            
+            for(int i=0; i< Vectexs.Get.throwObj.Count;i++)
+            {
+                if(Vectexs.Get.throwObj[i].GetComponent<Ball>().objnum == desindex)
+                {
+                    Vectexs.Get.throwObj.RemoveAt(i);
+                }
+            }
+            gameObject.GetComponent<MeshCollider>().enabled = false;
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
+            Invoke("ResetObj", 2.0f);
+            Invoke("ObjActivefalse", 3.5f);
+        }
+        #endregion
     }
 
     public void Cut()
@@ -143,7 +172,7 @@ public class Ball : MonoBehaviour
             obj = Instantiate(leftSideRoot, gameObjects[0].transform.position, Quaternion.identity);//오브젝트 생성
             obj.transform.rotation = Quaternion.LookRotation(angle);
 
-            Debug.Log("빈게임 오브젝트를 법선벡터방향으로 회전");
+            //Debug.Log("빈게임 오브젝트를 법선벡터방향으로 회전");
         }
         RotateLeftSide(obj);
         GameObject scanner = GameObject.Find("Scanner");
@@ -229,7 +258,7 @@ public class Ball : MonoBehaviour
     public void EdgePosLocate()
     {
 
-            Debug.Log("edgeobj 생성함");
+            //Debug.Log("edgeobj 생성함");
             //점찍고 나서 스케일과 위치를 다시 잡기위해서 점을 다 찍은후에 실행되야한다
             //Vectexs.Get.throwObj[Vectexs.Get.throwindex].GetComponent<Ball>().edgeobj
             edgeobj = Instantiate(edgeRoot, Vector3.zero, Quaternion.identity);
@@ -240,16 +269,42 @@ public class Ball : MonoBehaviour
                 //Debug.Log(edgeobj);
             }
             templistLocate = true;
-            Debug.Log(templistLocate);
+            //Debug.Log(templistLocate);
         
         //edgeobj.transform.rotation = obj.transform.rotation;//leftSideRoot의 회전값과 일치 시켜준다?
     }
     public void EdgePosLocate2()
     {
-            Debug.Log(edgeobj);
+            //Debug.Log(edgeobj);
             edgeobj.transform.position = obj.transform.position;
             edgeobj.transform.rotation = Quaternion.Slerp(obj.transform.rotation, Quaternion.LookRotation(-centerEye.transform.forward), Time.deltaTime * 4.0f);
             edgeobj.transform.localScale = gameObjects[0].transform.localScale;
     }
-
+    #region 오브젝트가 일정시간동안 칼에 닿으면 사라지게 처리하기위해서 조건검사
+    ///온트리거 스태리로 시간을 체크해서 일정시간이 지나면 잘리지 않게 콜라이더 비활성화 오브젝안보이게 처리후 
+    ///오브젝트비활성화 및 새로 생성부분으로 바로 넘어가게한다
+    public float dieTime;
+    public bool dieflow = false;
+    bool objdes = false;
+    int desindex;
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.CompareTag("Blade")==true)
+        {
+            dieflow = true;
+            desindex = objnum;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.CompareTag("Blade") == true)
+        {
+            dieflow = false;
+        }
+    }
+    public void ObjActivefalse()
+    {
+        gameObject.SetActive(false);
+    }
+    #endregion
 }

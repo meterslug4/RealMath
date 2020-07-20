@@ -32,6 +32,10 @@ public class Vectexs : MonoBehaviour
     public List<GameObject> throwObj;
     public int currentFigure;
     public string msg;
+    public Vector3 _startPos;//판정을 위해서 시작점을 저장 Ball 스크립트에서 받아옴
+    public Vector3 _endPos;//판정을 위해서 끝점을 저장 Ball스크립트에서 받아옴
+    public Vector3 _totaldir;//판정을 위해서 칼의 전체 진행방향을 Ball스크립트에서 받아옴
+    float Angle;//두 벡터사이의 각을 구하기 위해 원뿔에서 포물선을 구할때 사용하기 위함
     private void Awake()
     {
         if (m_Instance == null)
@@ -150,7 +154,7 @@ public class Vectexs : MonoBehaviour
             for(int k=0; k< tempFinal.Count; k++)
             {
                 nextVector = tempFinal[k];
-                if (Mathf.Abs(tempFinal[i].x - nextVector.x) < 0.005f)
+                if (Mathf.Abs(tempFinal[i].x - nextVector.x) < 0.0099f)
                 {
                     
                     x = tempFinal[i].x;
@@ -160,7 +164,7 @@ public class Vectexs : MonoBehaviour
                 {
                     x = nextVector.x;
                 }
-                if (Mathf.Abs(tempFinal[i].y - nextVector.y) < 0.005f)
+                if (Mathf.Abs(tempFinal[i].y - nextVector.y) < 0.0099f)
                 {
                    
                         y = tempFinal[i].y;
@@ -169,7 +173,7 @@ public class Vectexs : MonoBehaviour
                 {
                     y = nextVector.y;
                 }
-                if (Mathf.Abs(tempFinal[i].z - nextVector.z) < 0.005f)
+                if (Mathf.Abs(tempFinal[i].z - nextVector.z) < 0.0099f)
                 {
                     
                         z = tempFinal[i].z;
@@ -230,6 +234,7 @@ public class Vectexs : MonoBehaviour
                             else
                             {
                                 removeIndex2.Add(i);
+                                removeEdgeindex.Add(i);
                             }
 
                         }
@@ -248,6 +253,7 @@ public class Vectexs : MonoBehaviour
         //CheckFigure(); //도형 판정
         CheckJudge();
     }
+    public List<int> removeEdgeindex = new List<int>();
     public void MakeVertex()
     {
             for(int i=0; i<vertexs_RemoveDuple.Count; i++)
@@ -305,7 +311,7 @@ public class Vectexs : MonoBehaviour
                 throwObj[i].GetComponent<Ball>().enabled = true;
             }
         }
-        Debug.Log(throwindex + "번쨰 도형");
+        //Debug.Log(throwindex + "번쨰 도형");
         throwObj[throwindex].transform.position = Vector3.MoveTowards(throwObj[throwindex].transform.position, objcenter.position, 10 * Time.deltaTime);
     }
     /// <summary>
@@ -386,9 +392,10 @@ public class Vectexs : MonoBehaviour
     }
     public void CheckJudge()
     {
+        Debug.Log("도형판정");
         switch(MissionManager.Get.judgment)
         {
-            case 0:
+            case 0: //삼각형 판정
                 if(finalVectors.Count==3)
                 {
                     Debug.Log("성공");
@@ -400,24 +407,24 @@ public class Vectexs : MonoBehaviour
                 }
                 ResetBool();
                 break;
-            case 1:
+            case 1: //사각형 판정
                 if (finalVectors.Count == 4)
                 {
                     Debug.Log("성공");
                     MissionManager.Get.nowScore += 100;
                 }
-                else if((isTop == true && isBotum == true) || finalVectors.Count == 4)
+                else if((isTop == true && isBotum == true))
                     {
                     Debug.Log("성공");
                     MissionManager.Get.nowScore += 100;
                 }
-                    else
+                else
                 {
 
                 }
                 ResetBool();
                 break;
-            case 2:
+            case 2: //오각형 판정
                 if(finalVectors.Count ==5 )
                 {
                     Debug.Log("성공");
@@ -429,7 +436,7 @@ public class Vectexs : MonoBehaviour
                 }
                 ResetBool();
                 break;
-            case 3:
+            case 3: //육각형 판정
                 if(finalVectors.Count == 6)
                 {
                     Debug.Log("성공");
@@ -441,16 +448,24 @@ public class Vectexs : MonoBehaviour
                 }
                 ResetBool();
                 break;
-            case 4:
-                if (isTop == false && isBotum == false && finalVectors.Count > 7)
+            case 4: //원판정
+                if (isTop == false && isBotum == false && finalVectors.Count > 7) //실린더 원판정
                 {
-                    Debug.Log("성공");
-                    MissionManager.Get.nowScore += 100;
+                    if(Mathf.Abs(_startPos.y -_endPos.y)<0.008f) //시작점과 끝점의 y 값을 비교해서 별차이가 안나면 원판정
+                    {
+                        Debug.Log("성공");
+                        MissionManager.Get.nowScore += 100;
+                    }
+
                 }
-                else if(isconePoint == false && isconePlat == false)
+                else if(isconePoint == false && isconePlat == false) //원뿔 원 판정
                 {
-                    Debug.Log("성공");
-                    MissionManager.Get.nowScore += 100;
+                    if (Mathf.Abs(_startPos.y - _endPos.y) < 0.05f)//시작점과 끝점의 y 값을 비교해서 별차이가 안나면 원판정
+                    {
+                        Debug.Log("성공");
+                        MissionManager.Get.nowScore += 100;
+                    }
+
                 }
                 else
                 {
@@ -458,11 +473,17 @@ public class Vectexs : MonoBehaviour
                 }
                 ResetBool();
                 break;
-            case 5:
+            case 5: //포물선 판정
+                float Dot = Vector3.Angle(Vector3.up, _totaldir);
+                Angle = Dot;
+                Debug.Log(Angle);
                 if (isconePoint == false && isconePlat == true)
                 {
-                    Debug.Log("성공");
-                    MissionManager.Get.nowScore += 100;
+                    if(Mathf.Abs(Angle-25)<5) //원뿔에서의 포물선 판정
+                    {
+                        Debug.Log("성공");
+                        MissionManager.Get.nowScore += 100;
+                    }
                 }
                 else if ((isTop == true && isBotum == false && finalVectors.Count != 4) ||
                             (isTop == false && isBotum == true && finalVectors.Count != 4))
@@ -476,6 +497,44 @@ public class Vectexs : MonoBehaviour
                 }
                 ResetBool();
                 break;
+            case 6: //쌍곡선 판정
+                ResetBool();
+                if(isconePlat == true && isconePoint == false) //원뿔에서 쌍곡선 판정
+                {
+                    if(Mathf.Abs(_startPos.x -_endPos.x)<0.008 && Mathf.Abs(_startPos.z - _endPos.z) < 0.008)
+                        {
+                        Debug.Log("성공");
+                        MissionManager.Get.nowScore += 100;
+                    }
+                }
+                break;
+            case 7: //타원형 판정
+                if(currentFigure ==1)
+                {
+                    if (isTop == false && isBotum == false && finalVectors.Count > 7) //실린더 원판정
+                    {
+                        if (Mathf.Abs(_startPos.y - _endPos.y) >= 0.008f) //시작점과 끝점의 y 값을 비교해서 차이가 나면 타원
+                        {
+                            Debug.Log("성공");
+                            MissionManager.Get.nowScore += 100;
+                        }
+
+                    }
+                }
+                if(currentFigure==2)
+                {
+                    if (isconePoint == false && isconePlat == false) //원뿔 원 판정
+                    {
+                        if (Mathf.Abs(_startPos.y - _endPos.y) >= 0.008f)//시작점과 끝점의 y 값을 비교해서 차이가 나면 타원
+                        {
+                            Debug.Log("성공");
+                            MissionManager.Get.nowScore += 100;
+                        }
+
+                    }
+                }
+                ResetBool();
+                break;
         }
     }
     public void ResetBool()
@@ -486,6 +545,9 @@ public class Vectexs : MonoBehaviour
         isconePlat = false;
         isStartPoint = false;
         isEndPoint = false;
+        _startPos = Vector3.zero;
+        _endPos = Vector3.zero;
+        _totaldir = Vector3.zero;
         //MissionManager.Get.isMissionOn = true;
     }
     //public void TriangleCheck()

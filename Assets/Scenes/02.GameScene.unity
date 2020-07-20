@@ -5886,7 +5886,7 @@ GameObject:
   - component: {fileID: 763970611}
   m_Layer: 0
   m_Name: Blade
-  m_TagString: Untagged
+  m_TagString: Blade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15292,6 +15292,9 @@ MonoBehaviour:
   throwObj: []
   currentFigure: 0
   msg: 
+  _startPos: {x: 0, y: 0, z: 0}
+  _endPos: {x: 0, y: 0, z: 0}
+  _totaldir: {x: 0, y: 0, z: 0}
   isGet: 0
   vertexs: []
   vertexs_RemoveDuple: []
