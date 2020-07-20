@@ -23,6 +23,7 @@ public class Blade : MonoBehaviour
 
             if (other.CompareTag("Cutable") == true)
             {
+                gameObject.GetComponent<AudioSource>().enabled = true;
                 other.GetComponent<Ball>().isCutStart = true;//자르는것 시작
                 if (other.GetComponent<Ball>().objnum == 0)
                 {
@@ -66,6 +67,7 @@ public class Blade : MonoBehaviour
 
             if (other.CompareTag("ConePoint") == true)
             {
+                gameObject.GetComponent<AudioSource>().enabled = true;
                 Debug.Log("꼭지점을 지남");
                 //Vectexs.Get.msg = "꼭지점을 지남";
                 Vectexs.Get.isconePoint = true; //원뿔의 꼭지점을 지났다는 표시
@@ -84,7 +86,8 @@ public class Blade : MonoBehaviour
             }
             if (other.CompareTag("ConePlat") == true)
             {
-                Debug.Log("바닥을 지남");
+                gameObject.GetComponent<AudioSource>().enabled = true;
+            Debug.Log("바닥을 지남");
 
                 //원뿔의 바닥을 건드린경우
                 //바닥오브젝트의 부모 오브젝트의 ball 스크립트로 가서 시작점이 비었는지 안비었는지 체크해준다
@@ -105,7 +108,8 @@ public class Blade : MonoBehaviour
             }
             if (other.CompareTag("Top") == true)//실린더 윗면을 건드렸을때
             {
-                Vectexs.Get.isTop = true;
+            gameObject.GetComponent<AudioSource>().enabled = true;
+            Vectexs.Get.isTop = true;
                 if (other.transform.parent.GetComponent<Ball>().startPos == Vector3.zero)
                 {
                     other.transform.parent.GetComponent<Ball>().startPos = other.transform.position;
@@ -118,7 +122,8 @@ public class Blade : MonoBehaviour
             }
             if (other.CompareTag("Botum") == true)//실린더 아랫면을 건드렸을때
             {
-                Vectexs.Get.isBotum = true;
+            gameObject.GetComponent<AudioSource>().enabled = true;
+            Vectexs.Get.isBotum = true;
                 if (other.transform.parent.GetComponent<Ball>().startPos == Vector3.zero)
                 {
                     other.transform.parent.GetComponent<Ball>().startPos = other.transform.position;
@@ -132,6 +137,7 @@ public class Blade : MonoBehaviour
             //정사면체 꼭지점을 지난경우
             if (other.CompareTag("Point") == true && other.GetComponent<Ball>().objnum == 3)
             {
+            gameObject.GetComponent<AudioSource>().enabled = true;
                 if (other.transform.parent.GetComponent<Ball>().startPos == Vector3.zero)
                 {
                     //시작점이 비었는데 꼭지점을 지난경우
@@ -150,6 +156,7 @@ public class Blade : MonoBehaviour
             // 정팔면체에서 꼭지점을 지났을 경우
             if (other.CompareTag("Point") == true && other.GetComponent<Ball>().objnum == 4)
             {
+            gameObject.GetComponent<AudioSource>().enabled = true;
                 if (other.transform.parent.GetComponent<Ball>().startPos == Vector3.zero)
                 {
                     //시작점이 아직 안정해졌는데 꼭지점을 건드렸다?? ->그 꼭지점을 시작점으로
@@ -171,11 +178,13 @@ public class Blade : MonoBehaviour
     {
 
             if (other.CompareTag("Cutable") == true)
-            {
+            {            
+            gameObject.GetComponent<AudioSource>().enabled = false;
+            OVRInput.SetControllerVibration(0f, 0f, OVRInput.Controller.RTouch);
 
-                //other.GetComponent<Ball>().endPos = other.ClosestPointOnBounds(transform.position);
-                //오브젝트를 칼이 빠져나왔을때 endPos가 안정해졌으면 나온곳을 끝점으로 해준다.
-                //
+            //other.GetComponent<Ball>().endPos = other.ClosestPointOnBounds(transform.position);
+            //오브젝트를 칼이 빠져나왔을때 endPos가 안정해졌으면 나온곳을 끝점으로 해준다.
+            //
                 if (other.GetComponent<Ball>().endPos == Vector3.zero)
                 {
                     other.GetComponent<Ball>().endPos = other.ClosestPoint(transform.position);
@@ -187,10 +196,12 @@ public class Blade : MonoBehaviour
             }
             if (other.CompareTag("Point") == true)//마지막으로 꼭지점을 빠져나가면 
             {
-                other.transform.parent.GetComponent<Ball>().endPos = other.transform.position;//endPos로 꼭지점넣어주기
+            OVRInput.SetControllerVibration(0f, 0f, OVRInput.Controller.RTouch);
+            gameObject.GetComponent<AudioSource>().enabled = false;
+            other.transform.parent.GetComponent<Ball>().endPos = other.transform.position;//endPos로 꼭지점넣어주기
             }
         
-        OVRInput.SetControllerVibration(0f, 0f, OVRInput.Controller.RTouch);
+
     }
 
 
