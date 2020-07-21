@@ -114,6 +114,8 @@ MonoBehaviour:
     type: 3}
   edgeRoot: {fileID: 1066004690229602826, guid: abe9e6c8c99455844980f496811a68e1,
     type: 3}
+  edge: {fileID: 4617251648572949008, guid: 5f7b909c9267d314990824f308440d5f, type: 3}
+  edgeobj: {fileID: 0}
   startPos: {x: 0, y: 0, z: 0}
   endPos: {x: 0, y: 0, z: 0}
   angle: {x: 0, y: 0, z: 0}
@@ -125,7 +127,9 @@ MonoBehaviour:
   MoveSpeed: 0.3
   MoveTime: 0.5
   isCutting: 1
-  edge: {fileID: 4617251648572949008, guid: 5f7b909c9267d314990824f308440d5f, type: 3}
+  mat: {fileID: 2100000, guid: 46f486377968e3642918588765147c87, type: 2}
+  dieTime: 0
+  dieflow: 0
 --- !u!1 &339404726973162461
 GameObject:
   m_ObjectHideFlags: 0
