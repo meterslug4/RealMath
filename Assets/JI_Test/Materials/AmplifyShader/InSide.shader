@@ -31,7 +31,7 @@ Shader "InSide"
 		inline half4 LightingOutline( SurfaceOutput s, half3 lightDir, half atten ) { return half4 ( 0,0,0, s.Alpha); }
 		void outlineSurf( Input i, inout SurfaceOutput o )
 		{
-			float4 color4 = IsGammaSpace() ? float4(1,0,0,0) : float4(1,0,0,0);
+			float4 color4 = IsGammaSpace() ? float4(1,0.412919,0,0) : float4(1,0.1421032,0,0);
 			o.Emission = color4.rgb;
 		}
 		ENDCG
@@ -65,8 +65,8 @@ Shader "InSide"
 }
 /*ASEBEGIN
 Version=18000
-128.8;279.2;1079;522;617.4683;-219.3463;1.327839;True;False
-Node;AmplifyShaderEditor.ColorNode;4;-247.2827,251.6835;Inherit;False;Constant;_Color0;Color 0;0;0;Create;True;0;0;False;0;1,0,0,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+69.6;210.4;1079;528;617.4683;-219.3463;1.327839;True;False
+Node;AmplifyShaderEditor.ColorNode;4;-247.2827,251.6835;Inherit;False;Constant;_Color0;Color 0;0;0;Create;True;0;0;False;0;1,0.412919,0,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RangedFloatNode;6;-191.7514,475.9768;Inherit;False;Constant;_Float0;Float 0;0;0;Create;True;0;0;False;0;0.1;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.ColorNode;7;-74.6077,99.72595;Inherit;False;Constant;_Color1;Color 1;0;0;Create;True;0;0;False;0;1,0,0,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.FresnelNode;8;42.78114,-52.51276;Inherit;False;Standard;WorldNormal;ViewDir;False;False;5;0;FLOAT3;0,0,1;False;4;FLOAT3;0,0,0;False;1;FLOAT;0;False;2;FLOAT;1;False;3;FLOAT;5;False;1;FLOAT;0
@@ -79,4 +79,4 @@ WireConnection;5;0;4;0
 WireConnection;5;1;6;0
 WireConnection;0;11;5;0
 ASEEND*/
-//CHKSM=E126120D0AA884349988B03A202B7C01BF3CF306
+//CHKSM=01C2CE5E5DD311B551D79DD269C4DFC9919F6F18
