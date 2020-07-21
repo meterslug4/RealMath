@@ -210,6 +210,7 @@ public class Vectexs : MonoBehaviour
     }
     public void MakeVertex2()
     {
+        removeIndex2.Clear(); //0720 추가함
         for (int i = 0; i < finalVectors.Count; i++)
         {
             tempList2.Clear();
@@ -300,7 +301,6 @@ public class Vectexs : MonoBehaviour
         }
         edgeFind = true;
         //CheckFigure(); //도형 판정
-        CheckJudge();
     }
     public int throwindex;
     public void ThrowObj()
@@ -313,7 +313,7 @@ public class Vectexs : MonoBehaviour
                 throwObj[i].GetComponent<Ball>().enabled = true;
             }
         }
-        Debug.Log(throwindex + "번쨰 도형");
+        //Debug.Log(throwindex + "번쨰 도형");
         throwObj[throwindex].transform.position = Vector3.MoveTowards(throwObj[throwindex].transform.position, objcenter.position, 10 * Time.deltaTime);
     }
     /// <summary>
@@ -331,10 +331,12 @@ public class Vectexs : MonoBehaviour
                 {
                     Debug.Log("성공");
                     MissionManager.Get.nowScore += 100;
+                    success.SetActive(true);
                 }
                 else
                 {
-
+                    Debug.Log("실패");
+                    fail.SetActive(true);
                 }
                 ResetBool();
                 break;
@@ -343,15 +345,18 @@ public class Vectexs : MonoBehaviour
                 {
                     Debug.Log("성공");
                     MissionManager.Get.nowScore += 100;
+                    success.SetActive(true);
                 }
-                else if ((isTop == true && isBotum == true))
+                else if ((isTop == true && isBotum == true && currentFigure==1))
                 {
                     Debug.Log("성공");
                     MissionManager.Get.nowScore += 100;
+                    success.SetActive(true);
                 }
                 else
                 {
-
+                    Debug.Log("실패");
+                    fail.SetActive(true);
                 }
                 ResetBool();
                 break;
@@ -360,10 +365,12 @@ public class Vectexs : MonoBehaviour
                 {
                     Debug.Log("성공");
                     MissionManager.Get.nowScore += 100;
+                    success.SetActive(true);
                 }
                 else
                 {
-
+                    Debug.Log("실패");
+                    fail.SetActive(true);
                 }
                 ResetBool();
                 break;
@@ -372,84 +379,143 @@ public class Vectexs : MonoBehaviour
                 {
                     Debug.Log("성공");
                     MissionManager.Get.nowScore += 100;
+                    success.SetActive(true);
                 }
                 else
                 {
-
+                    Debug.Log("실패");
+                    fail.SetActive(true);
                 }
                 ResetBool();
                 break;
             case 4: //원판정
-                if (isTop == false && isBotum == false && finalVectors.Count > 7) //실린더 원판정
+                if (isTop == false && isBotum == false && currentFigure ==1) //실린더 원판정
                 {
                     if (Mathf.Abs(_startPos.y - _endPos.y) < 0.008f) //시작점과 끝점의 y 값을 비교해서 별차이가 안나면 원판정
                     {
                         Debug.Log("성공");
                         MissionManager.Get.nowScore += 100;
+                        success.SetActive(true);
+                    }
+                    else
+                    {
+                        Debug.Log("실패");
+                        fail.SetActive(true);
                     }
 
                 }
-                else if (isconePoint == false && isconePlat == false) //원뿔 원 판정
+                else if (isconePoint == false && isconePlat == false && currentFigure == 2) //원뿔 원 판정
                 {
                     if (Mathf.Abs(_startPos.y - _endPos.y) < 0.05f)//시작점과 끝점의 y 값을 비교해서 별차이가 안나면 원판정
                     {
                         Debug.Log("성공");
                         MissionManager.Get.nowScore += 100;
+                        success.SetActive(true);
+                    }
+                    else
+                    {
+                        Debug.Log("실패");
+                        fail.SetActive(true);
                     }
 
                 }
                 else
                 {
-
+                    Debug.Log("실패");
+                    fail.SetActive(true);
                 }
                 ResetBool();
                 break;
             case 5: //포물선 판정
                 float Dot = Vector3.Angle(Vector3.up, _totaldir);
                 Angle = Dot;
-                Debug.Log(Angle);
-                if (isconePoint == false && isconePlat == true)
+                if(Angle>90)
                 {
-                    if (Mathf.Abs(Angle - 25) < 5) //원뿔에서의 포물선 판정
-                    {
-                        Debug.Log("성공");
-                        MissionManager.Get.nowScore += 100;
-                    }
-                }
-                else if ((isTop == true && isBotum == false && finalVectors.Count != 4) ||
-                            (isTop == false && isBotum == true && finalVectors.Count != 4))
-                {
-                    Debug.Log("성공");
-                    MissionManager.Get.nowScore += 100;
+                    float temp;
+                    temp = Angle - 90;
+                    Angle = 90 - temp;
                 }
                 else
                 {
+
+                }
+                Debug.Log(Angle);
+                if (currentFigure == 2)
+                {
+                    if (isconePoint == false && isconePlat == true)
+                    {
+                        if (Mathf.Abs(Angle - 25) < 7f) //원뿔에서의 포물선 판정
+                        {
+                            Debug.Log("성공");
+                            MissionManager.Get.nowScore += 100;
+                            success.SetActive(true);
+                        }
+                        else
+                        {
+                            Debug.Log("실패");
+                            fail.SetActive(true);
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("실패");
+                        fail.SetActive(true);
+                    }
+                    //else if ((isTop == true && isBotum == false && finalVectors.Count != 4) ||
+                    //            (isTop == false && isBotum == true && finalVectors.Count != 4))
+                    //{
+                    //    Debug.Log("성공");
+                    //    MissionManager.Get.nowScore += 100;
+                    //    success.SetActive(true);
+                    //}
 
                 }
                 ResetBool();
                 break;
             case 6: //쌍곡선 판정
                 ResetBool();
-                if (isconePlat == true && isconePoint == false) //원뿔에서 쌍곡선 판정
+                if (isconePlat == true && isconePoint == false && currentFigure == 2) //원뿔에서 쌍곡선 판정
                 {
-                    if (Mathf.Abs(_startPos.x - _endPos.x) < 0.008 && Mathf.Abs(_startPos.z - _endPos.z) < 0.008)
+                    if (Mathf.Abs(_startPos.x - _endPos.x) < 0.09f && Mathf.Abs(_startPos.z - _endPos.z) < 0.09f)
                     {
                         Debug.Log("성공");
                         MissionManager.Get.nowScore += 100;
+                        success.SetActive(true);
                     }
+                    else
+                    {
+                        Debug.Log("실패");
+                        fail.SetActive(true);
+                    }
+                }
+                else
+                {
+                    Debug.Log("실패");
+                    fail.SetActive(true);
                 }
                 break;
             case 7: //타원형 판정
                 if (currentFigure == 1)
                 {
-                    if (isTop == false && isBotum == false && finalVectors.Count > 7) //실린더 원판정
+                    if (isTop == false && isBotum == false) //실린더 원판정
                     {
-                        if (Mathf.Abs(_startPos.y - _endPos.y) >= 0.008f) //시작점과 끝점의 y 값을 비교해서 차이가 나면 타원
+                        if (Mathf.Abs(_startPos.y - _endPos.y) >= 0.01f) //시작점과 끝점의 y 값을 비교해서 차이가 나면 타원
                         {
                             Debug.Log("성공");
                             MissionManager.Get.nowScore += 100;
+                            success.SetActive(true);
+                        }
+                        else
+                        {
+                            Debug.Log("실패");
+                            fail.SetActive(true);
                         }
 
+                    }
+                    else
+                    {
+                        Debug.Log("실패");
+                        fail.SetActive(true);
                     }
                 }
                 if (currentFigure == 2)
@@ -460,8 +526,19 @@ public class Vectexs : MonoBehaviour
                         {
                             Debug.Log("성공");
                             MissionManager.Get.nowScore += 100;
+                            success.SetActive(true);
+                        }
+                        else
+                        {
+                            Debug.Log("실패");
+                            fail.SetActive(true);
                         }
 
+                    }
+                    else
+                    {
+                        Debug.Log("실패");
+                        fail.SetActive(true);
                     }
                 }
                 ResetBool();

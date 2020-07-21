@@ -141,7 +141,7 @@ public class Ball : MonoBehaviour
         gameObjects = MeshCut.Cut(gameObject, center, angle,
          new Material(Shader.Find("Unlit/Color")));
         gameObjects[0].GetComponent<Ball>().isCutting = false;
-        gameObjects[0].AddComponent<MeshCollider>().convex = true;
+        //gameObjects[0].AddComponent<MeshCollider>().convex = true;
         
         //gameObjects[0].AddComponent<Ball>();
         //gameObjects[0].transform.position += -angle*1;

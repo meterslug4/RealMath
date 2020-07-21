@@ -158,7 +158,7 @@ public class MissionManager : MonoBehaviour
             Debug.Log("실린더관련 미션"); //사각형 포물선 원 타원
             if (nowScenNum == 1)
             {
-                nowGoal = Random.Range(0, 4);
+                nowGoal = Random.Range(0, 3);
                 if (nowGoal == 0)
                 {
                     MakeSquare();
@@ -167,10 +167,10 @@ public class MissionManager : MonoBehaviour
                 {
                     MakeCircle();
                 }
-                else if (nowGoal == 2)
-                {
-                    MakeParabola();
-                }
+                //else if (nowGoal == 2)
+                //{
+                //    MakeParabola();
+                //}
                 else
                 {
                     MakeEllipse();
@@ -178,32 +178,40 @@ public class MissionManager : MonoBehaviour
             }
             else if (nowScenNum == 2)
             {
-                nowGoal = Random.Range(0, 2);
-                if(nowGoal ==0)
-                {
-                    MakeParabola();//포물선
-                }
-                else //타원
-                {
-                    MakeEllipse();
-                }
-               
-            }
-            else if (nowScenNum == 3)
-            {
-                nowGoal = Random.Range(0, 4);
-                if(nowGoal==0)
+                nowGoal = Random.Range(0, 3);
+                if (nowGoal == 0)
                 {
                     MakeSquare();
                 }
-                else if(nowGoal ==1)
+                else if (nowGoal == 1)
                 {
                     MakeCircle();
                 }
-                else if(nowGoal==2)
+                //else if (nowGoal == 2)
+                //{
+                //    MakeParabola();
+                //}
+                else
                 {
-                    MakeParabola();
+                    MakeEllipse();
                 }
+
+            }
+            else if (nowScenNum == 3)
+            {
+                nowGoal = Random.Range(0, 3);
+                if (nowGoal == 0)
+                {
+                    MakeSquare();
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeCircle();
+                }
+                //else if (nowGoal == 2)
+                //{
+                //    MakeParabola();
+                //}
                 else
                 {
                     MakeEllipse();
@@ -239,33 +247,44 @@ public class MissionManager : MonoBehaviour
             }
             else if (nowScenNum == 2)
             {
-                nowGoal = Random.Range(0, 2);
-                if(nowGoal==0)
+                nowGoal = Random.Range(0, 5);
+                if (nowGoal == 0)
+                {
+                    MakeTriangle();//삼각형
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeCircle();//원
+                }
+                else if (nowGoal == 2)
                 {
                     MakeParabola();//포물선
                 }
-                else
+                else if (nowGoal == 3)
                 {
                     MakeEllipse();//타원
                 }
-                
+                else
+                {
+                    MakeHyperbola();//쌍곡선
+                }
             }
             else if (nowScenNum == 3)
             {
                 nowGoal = Random.Range(0, 5);
-                if(nowGoal ==0)
+                if (nowGoal == 0)
                 {
                     MakeTriangle();//삼각형
                 }
-                else if(nowGoal ==1)
+                else if (nowGoal == 1)
                 {
                     MakeCircle();//원
                 }
-                else if(nowGoal ==2)
+                else if (nowGoal == 2)
                 {
                     MakeParabola();//포물선
                 }
-                else if(nowGoal ==3)
+                else if (nowGoal == 3)
                 {
                     MakeEllipse();//타원
                 }
@@ -292,7 +311,15 @@ public class MissionManager : MonoBehaviour
             }
             else if (nowScenNum == 2)
             {
-                MakeSquare();
+                nowGoal = Random.Range(0, 2);
+                if (nowGoal == 0)
+                {
+                    MakeTriangle();
+                }
+                else
+                {
+                    MakeSquare();
+                }
             }
             else if (nowScenNum == 3)
             {
@@ -312,15 +339,15 @@ public class MissionManager : MonoBehaviour
             Debug.Log("정팔면체관련 미션");
             if (nowScenNum == 1)
             {
-                nowGoal = Random.Range(0, 3);
+                nowGoal = Random.Range(0, 2);
                 if (nowGoal == 0)
                 {
                     MakeSquare();
                 }
-                else if (nowGoal == 1)
-                {
-                    MakePenta();
-                }
+                //else if (nowGoal == 1)
+                //{
+                //    MakePenta();
+                //}
                 else
                 {
                     MakeHexa();
@@ -331,8 +358,12 @@ public class MissionManager : MonoBehaviour
                 nowGoal = Random.Range(0, 2);
                 if (nowGoal == 0)
                 {
-                    MakePenta();
+                    MakeSquare();
                 }
+                //else if (nowGoal == 1)
+                //{
+                //    MakePenta();
+                //}
                 else
                 {
                     MakeHexa();
@@ -340,15 +371,15 @@ public class MissionManager : MonoBehaviour
             }
             else if (nowScenNum == 3)
             {
-                nowGoal = Random.Range(0, 3);
-                if(nowGoal ==0)
+                nowGoal = Random.Range(0, 2);
+                if (nowGoal == 0)
                 {
                     MakeSquare();
                 }
-                else if(nowGoal ==1)
-                {
-                    MakePenta();
-                }
+                //else if (nowGoal == 1)
+                //{
+                //    MakePenta();
+                //}
                 else
                 {
                     MakeHexa();
