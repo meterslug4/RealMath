@@ -16,6 +16,12 @@ TagManager:
   - _Color
   - Button
   - Blade
+  - Point1
+  - Point2
+  - Point3
+  - Point4
+  - Point5
+  - Point6
   layers:
   - Default
   - TransparentFX

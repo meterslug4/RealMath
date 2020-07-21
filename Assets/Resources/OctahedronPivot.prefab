@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5586493063695044053}
   m_Layer: 0
   m_Name: Cube.005
-  m_TagString: Point
+  m_TagString: Point3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 4085834126483889404}
   m_Layer: 0
   m_Name: Cube.001
-  m_TagString: Point
+  m_TagString: Point2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 5173419791799553597}
   m_Layer: 0
   m_Name: Cube.002
-  m_TagString: Point
+  m_TagString: Point6
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -410,7 +410,10 @@ MonoBehaviour:
   MoveSpeed: 0.3
   MoveTime: 0.5
   isCutting: 1
+<<<<<<< HEAD
+=======
   mat: {fileID: 2100000, guid: 46f486377968e3642918588765147c87, type: 2}
+>>>>>>> c070c54e9a7b28f0825abb5aff27f708bae06d04
   dieTime: 0
   dieflow: 0
 --- !u!1 &7114658372306260105
@@ -427,7 +430,7 @@ GameObject:
   - component: {fileID: 7130791982026562467}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Point
+  m_TagString: Point1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -520,7 +523,7 @@ GameObject:
   - component: {fileID: 2505966092430104634}
   m_Layer: 0
   m_Name: Cube.003
-  m_TagString: Point
+  m_TagString: Point4
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -613,7 +616,7 @@ GameObject:
   - component: {fileID: 6649135612266005967}
   m_Layer: 0
   m_Name: Cube.004
-  m_TagString: Point
+  m_TagString: Point5
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

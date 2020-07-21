@@ -39,6 +39,12 @@ public class Vectexs : MonoBehaviour
     float Angle;//두 벡터사이의 각을 구하기 위해 원뿔에서 포물선을 구할때 사용하기 위함
     public GameObject success;
     public GameObject fail;
+    public bool point1 = false;
+    public bool point2 = false;
+    public bool point3 = false;
+    public bool point4 = false;
+    public bool point5 = false;
+    public bool point6 = false;
     private void Awake()
     {
         if (m_Instance == null)
@@ -87,30 +93,35 @@ public class Vectexs : MonoBehaviour
         {
             ismakeCube = false;
             GameObject obj = Instantiate(Figures[0], spawn[0].position, Quaternion.identity);
+
             throwObj.Add(obj);
         }
         if(ismakeCylinder == true)
         {
             ismakeCylinder = false;
             GameObject obj = Instantiate(Figures[1], spawn[1].position, Quaternion.identity);
+
             throwObj.Add(obj);
         }
         if(ismakeCone == true)
         {
             ismakeCone = false;
             GameObject obj = Instantiate(Figures[2], spawn[2].position, Quaternion.identity);
+
             throwObj.Add(obj);
         }
         if(ismakeTetrahedron == true)
         {
             ismakeTetrahedron = false;
             GameObject obj = Instantiate(Figures[3], spawn[3].position, Quaternion.identity);
+
             throwObj.Add(obj);
         }
         if(ismakeOctahedron == true)
         {
             ismakeOctahedron = false;
             GameObject obj = Instantiate(Figures[4], spawn[4].position, Quaternion.identity);
+
             throwObj.Add(obj);
         }
 
@@ -391,7 +402,7 @@ public class Vectexs : MonoBehaviour
             case 4: //원판정
                 if (isTop == false && isBotum == false && currentFigure ==1) //실린더 원판정
                 {
-                    if (Mathf.Abs(_startPos.y - _endPos.y) < 0.008f) //시작점과 끝점의 y 값을 비교해서 별차이가 안나면 원판정
+                    if (Mathf.Abs(_startPos.y - _endPos.y) < 0.08f) //시작점과 끝점의 y 값을 비교해서 별차이가 안나면 원판정
                     {
                         Debug.Log("성공");
                         MissionManager.Get.nowScore += 100;
@@ -406,7 +417,7 @@ public class Vectexs : MonoBehaviour
                 }
                 else if (isconePoint == false && isconePlat == false && currentFigure == 2) //원뿔 원 판정
                 {
-                    if (Mathf.Abs(_startPos.y - _endPos.y) < 0.05f)//시작점과 끝점의 y 값을 비교해서 별차이가 안나면 원판정
+                    if (Mathf.Abs(_startPos.y - _endPos.y) < 0.08f)//시작점과 끝점의 y 값을 비교해서 별차이가 안나면 원판정
                     {
                         Debug.Log("성공");
                         MissionManager.Get.nowScore += 100;
@@ -522,7 +533,7 @@ public class Vectexs : MonoBehaviour
                 {
                     if (isconePoint == false && isconePlat == false) //원뿔 원 판정
                     {
-                        if (Mathf.Abs(_startPos.y - _endPos.y) >= 0.008f)//시작점과 끝점의 y 값을 비교해서 차이가 나면 타원
+                        if (Mathf.Abs(_startPos.y - _endPos.y) >= 0.01f)//시작점과 끝점의 y 값을 비교해서 차이가 나면 타원
                         {
                             Debug.Log("성공");
                             MissionManager.Get.nowScore += 100;
@@ -556,8 +567,14 @@ public class Vectexs : MonoBehaviour
         _startPos = Vector3.zero;
         _endPos = Vector3.zero;
         _totaldir = Vector3.zero;
-        //MissionManager.Get.isMissionOn = true;
-    }
+         point1 = false;
+         point2 = false;
+         point3 = false;
+         point4 = false;
+         point5 = false;
+         point6 = false;
+    //MissionManager.Get.isMissionOn = true;
+}
     //public void TriangleCheck()
     //{
     //    //절대값으로 각 점간의 길이 구하기
