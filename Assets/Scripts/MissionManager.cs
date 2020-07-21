@@ -37,6 +37,7 @@ public class MissionManager : MonoBehaviour
     public int nowScore;
     public GameObject success;
     public GameObject fail;
+    public GameObject missionEffect;
 
     void Start()
     {
@@ -50,6 +51,7 @@ public class MissionManager : MonoBehaviour
         scoreText.text = nowScore.ToString();
         if(isMissionOn==true && nowScore<500)
         {
+            missionEffect.GetComponent<ParticleSystem>().Play();
            isMissionOn = false;
             success.SetActive(false);
             fail.SetActive(false);
