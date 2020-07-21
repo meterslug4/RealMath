@@ -40,7 +40,7 @@ public class Ball : MonoBehaviour
     GameObject obj;//leftSideRoot 을 담을 변수
     GameObject cameraPos;
     Transform centerEye;
-    
+    public Material mat;
     
     //percent= -0.5 < percent <0.5 의 값들중하나로 지정하면될듯함.
     //public float percent=0.0f;
@@ -51,17 +51,23 @@ public class Ball : MonoBehaviour
 
     void Start()
     {
+<<<<<<< HEAD
         gameObject.GetComponent<Ball>().enabled = false;
+=======
+
+>>>>>>> c070c54e9a7b28f0825abb5aff27f708bae06d04
         startPos = Vector3.zero;
         endPos = Vector3.zero;
         cameraPos = GameObject.Find("OVRCameraRig");
         centerEye = cameraPos.transform.GetChild(0).GetChild(1).transform;
+
         //centerEye = cameraPos.transform;
         //if (objnum == 2)
         //{
         //    transform.Rotate(new Vector3(-90, 0, 0), Space.World);
         //}
         MoveTime = 3.0f;
+        gameObject.GetComponent<Ball>().enabled = false;
     }
 
     void Update()
@@ -142,6 +148,7 @@ public class Ball : MonoBehaviour
         gameObjects = MeshCut.Cut(gameObject, center, angle,
          new Material(Shader.Find("Unlit/Color")));
         gameObjects[0].GetComponent<Ball>().isCutting = false;
+        gameObjects[0].GetComponent<MeshRenderer>().material = new Material(mat);
         //gameObjects[0].AddComponent<MeshCollider>().convex = true;
         
         //gameObjects[0].AddComponent<Ball>();
