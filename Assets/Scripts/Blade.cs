@@ -110,6 +110,7 @@ public class Blade : MonoBehaviour
             {
             gameObject.GetComponent<AudioSource>().enabled = true;
             Vectexs.Get.isTop = true;
+            Debug.Log("실린더 윗면 건드림");
                 if (other.transform.parent.GetComponent<Ball>().startPos == Vector3.zero)
                 {
                     other.transform.parent.GetComponent<Ball>().startPos = other.transform.position;
@@ -124,7 +125,8 @@ public class Blade : MonoBehaviour
             {
             gameObject.GetComponent<AudioSource>().enabled = true;
             Vectexs.Get.isBotum = true;
-                if (other.transform.parent.GetComponent<Ball>().startPos == Vector3.zero)
+            Debug.Log("실린더 아래면 건드림");
+            if (other.transform.parent.GetComponent<Ball>().startPos == Vector3.zero)
                 {
                     other.transform.parent.GetComponent<Ball>().startPos = other.transform.position;
                 }

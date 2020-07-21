@@ -37,6 +37,7 @@ public class MissionManager : MonoBehaviour
     public int nowScore;
     public GameObject success;
     public GameObject fail;
+    public GameObject missionEffect;
 
     void Start()
     {
@@ -48,13 +49,22 @@ public class MissionManager : MonoBehaviour
     void Update()
     {
         scoreText.text = nowScore.ToString();
-        if(isMissionOn==true)
+        if(isMissionOn==true && nowScore<500)
         {
+            missionEffect.GetComponent<ParticleSystem>().Play();
            isMissionOn = false;
             success.SetActive(false);
             fail.SetActive(false);
 
             MissionOn();
+        }
+        if(nowScore >=500 && nowScenNum==1)
+        {
+            SceneManager.LoadScene(2);
+        }
+        if (nowScore >= 500 && nowScenNum == 2)
+        {
+            SceneManager.LoadScene(3);
         }
     }
     public void MissionOn()
@@ -94,14 +104,22 @@ public class MissionManager : MonoBehaviour
             Debug.Log("큐브관련 미션"); 
             if(nowScenNum==1)
             {
-                nowGoal = Random.Range(0, 2);
-                if(nowGoal==0)
+                nowGoal = Random.Range(0, 4);
+                if (nowGoal == 0)
                 {
                     MakeTriangle();
                 }
-                else
+                else if (nowGoal == 1)
                 {
                     MakeSquare();
+                }
+                else if (nowGoal == 2)
+                {
+                    MakePenta();
+                }
+                else
+                {
+                    MakeHexa();
                 }
             }
             else if(nowScenNum==2)
@@ -139,73 +157,142 @@ public class MissionManager : MonoBehaviour
         }
         else if(num==1)
         {
-            Debug.Log("실린더관련 미션");
+            Debug.Log("실린더관련 미션"); //사각형 포물선 원 타원
             if (nowScenNum == 1)
             {
-                nowGoal = Random.Range(0, 2);
-                if(nowGoal ==0)
+                nowGoal = Random.Range(0, 3);
+                if (nowGoal == 0)
                 {
                     MakeSquare();
                 }
-                else
+                else if (nowGoal == 1)
                 {
                     MakeCircle();
+                }
+                //else if (nowGoal == 2)
+                //{
+                //    MakeParabola();
+                //}
+                else
+                {
+                    MakeEllipse();
                 }
             }
             else if (nowScenNum == 2)
             {
-                MakeParabola();
+                nowGoal = Random.Range(0, 3);
+                if (nowGoal == 0)
+                {
+                    MakeSquare();
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeCircle();
+                }
+                //else if (nowGoal == 2)
+                //{
+                //    MakeParabola();
+                //}
+                else
+                {
+                    MakeEllipse();
+                }
+
             }
             else if (nowScenNum == 3)
             {
                 nowGoal = Random.Range(0, 3);
-                if(nowGoal==0)
+                if (nowGoal == 0)
                 {
                     MakeSquare();
                 }
-                else if(nowGoal ==1)
+                else if (nowGoal == 1)
                 {
                     MakeCircle();
                 }
+                //else if (nowGoal == 2)
+                //{
+                //    MakeParabola();
+                //}
                 else
                 {
-                    MakeParabola();
+                    MakeEllipse();
                 }
             }
         }
         else if(num==2)
         {
-            Debug.Log("원뿔관련 미션");
+            Debug.Log("원뿔관련 미션"); //삼각형, 타원, 원, 포물선, 쌍곡선
             if (nowScenNum == 1)
             {
-                nowGoal = Random.Range(0, 2);
-                if(nowGoal ==0)
+                nowGoal = Random.Range(0, 5);
+                if (nowGoal == 0)
                 {
-                    MakeTriangle();
+                    MakeTriangle();//삼각형
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeCircle();//원
+                }
+                else if (nowGoal == 2)
+                {
+                    MakeParabola();//포물선
+                }
+                else if (nowGoal == 3)
+                {
+                    MakeEllipse();//타원
                 }
                 else
                 {
-                    MakeCircle();
+                    MakeHyperbola();//쌍곡선
                 }
             }
             else if (nowScenNum == 2)
             {
-                MakeParabola();
-            }
-            else if (nowScenNum == 3)
-            {
-                nowGoal = Random.Range(0, 3);
-                if(nowGoal ==0)
+                nowGoal = Random.Range(0, 5);
+                if (nowGoal == 0)
                 {
-                    MakeTriangle();
+                    MakeTriangle();//삼각형
                 }
-                else if(nowGoal ==1)
+                else if (nowGoal == 1)
                 {
-                    MakeCircle();
+                    MakeCircle();//원
+                }
+                else if (nowGoal == 2)
+                {
+                    MakeParabola();//포물선
+                }
+                else if (nowGoal == 3)
+                {
+                    MakeEllipse();//타원
                 }
                 else
                 {
-                    MakeParabola();
+                    MakeHyperbola();//쌍곡선
+                }
+            }
+            else if (nowScenNum == 3)
+            {
+                nowGoal = Random.Range(0, 5);
+                if (nowGoal == 0)
+                {
+                    MakeTriangle();//삼각형
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeCircle();//원
+                }
+                else if (nowGoal == 2)
+                {
+                    MakeParabola();//포물선
+                }
+                else if (nowGoal == 3)
+                {
+                    MakeEllipse();//타원
+                }
+                else
+                {
+                    MakeHyperbola();//쌍곡선
                 }
             }
         }
@@ -214,11 +301,27 @@ public class MissionManager : MonoBehaviour
             Debug.Log("정사면체관련 미션");
             if (nowScenNum == 1)
             {
-                MakeTriangle();
+                nowGoal = Random.Range(0, 2);
+                if (nowGoal == 0)
+                {
+                    MakeTriangle();
+                }
+                else
+                {
+                    MakeSquare();
+                }
             }
             else if (nowScenNum == 2)
             {
-                MakeSquare();
+                nowGoal = Random.Range(0, 2);
+                if (nowGoal == 0)
+                {
+                    MakeTriangle();
+                }
+                else
+                {
+                    MakeSquare();
+                }
             }
             else if (nowScenNum == 3)
             {
@@ -238,15 +341,31 @@ public class MissionManager : MonoBehaviour
             Debug.Log("정팔면체관련 미션");
             if (nowScenNum == 1)
             {
-                MakeSquare();
+                nowGoal = Random.Range(0, 2);
+                if (nowGoal == 0)
+                {
+                    MakeSquare();
+                }
+                //else if (nowGoal == 1)
+                //{
+                //    MakePenta();
+                //}
+                else
+                {
+                    MakeHexa();
+                }
             }
             else if (nowScenNum == 2)
             {
                 nowGoal = Random.Range(0, 2);
                 if (nowGoal == 0)
                 {
-                    MakePenta();
+                    MakeSquare();
                 }
+                //else if (nowGoal == 1)
+                //{
+                //    MakePenta();
+                //}
                 else
                 {
                     MakeHexa();
@@ -254,15 +373,15 @@ public class MissionManager : MonoBehaviour
             }
             else if (nowScenNum == 3)
             {
-                nowGoal = Random.Range(0, 3);
-                if(nowGoal ==0)
+                nowGoal = Random.Range(0, 2);
+                if (nowGoal == 0)
                 {
                     MakeSquare();
                 }
-                else if(nowGoal ==1)
-                {
-                    MakePenta();
-                }
+                //else if (nowGoal == 1)
+                //{
+                //    MakePenta();
+                //}
                 else
                 {
                     MakeHexa();
@@ -270,34 +389,68 @@ public class MissionManager : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// 삼각형은 큐브, 정사면체, 원뿔 에서만 발생해야함
+    /// </summary>
     public void MakeTriangle()
     {
         missionText.text = "삼각형을";
         judgment = 0;
     }
+    /// <summary>
+    /// 사각형은 큐브, 실린더, 정사면,체 정팔면체에서 발생함
+    /// </summary>
     public void MakeSquare()
     {
         missionText.text = "사각형을";
         judgment = 1;
     }
+    /// <summary>
+    /// 오각형은 큐브, 정팔면체 에서 발생함
+    /// </summary>
     public void MakePenta()
     {
         missionText.text = "오각형을";
         judgment = 2;
     }
+    /// <summary>
+    /// 육각형은 정팔면체, 큐브 에서만 발생함
+    /// </summary>
     public void MakeHexa()
     {
         missionText.text = "육각형을";
         judgment = 3;
     }
+    /// <summary>
+    /// 원은 원뿔,실린더에서만 생김
+    /// </summary>
     public void MakeCircle()
     {
         missionText.text = "원을";
         judgment = 4;
     }
+    /// <summary>
+    /// 포물선은 실린더, 원뿔에서만 생김
+    /// </summary>
     public void MakeParabola()
     {
         missionText.text = "포물선을";
         judgment = 5;
+    }
+    /// <summary>
+    /// 쌍곡선은 원뿔에서만 나옴
+    /// </summary>
+    public void MakeHyperbola()
+    {
+        missionText.text = "쌍곡선을";
+        judgment = 6;
+    }
+    /// <summary>
+    /// 타원은 원뿔, 실린더에서 발생
+    /// </summary>
+    public void MakeEllipse()
+    {
+        missionText.text = "타원을";
+        judgment = 7;
     }
 }

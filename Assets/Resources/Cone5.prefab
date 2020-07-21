@@ -113,6 +113,8 @@ MonoBehaviour:
   MoveSpeed: 0.3
   MoveTime: 0.5
   isCutting: 1
+  dieTime: 0
+  dieflow: 0
 --- !u!64 &8995905660868443205
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -308,7 +310,7 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8685651895707832981}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 1

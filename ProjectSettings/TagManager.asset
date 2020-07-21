@@ -15,6 +15,7 @@ TagManager:
   - Edge
   - _Color
   - Button
+  - Blade
   layers:
   - Default
   - TransparentFX

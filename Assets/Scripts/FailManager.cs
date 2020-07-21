@@ -4,16 +4,11 @@ using UnityEngine;
 
 public class FailManager : MonoBehaviour
 {
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        iTween.ShakePosition(gameObject, Vector3.one, 1.0f);
-    }
-
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
         
+            Vector3 amount = new Vector3(0.1f, 0.1f, 0.1f);
+            iTween.ShakePosition(gameObject, amount, 1.0f);
     }
 }
+
