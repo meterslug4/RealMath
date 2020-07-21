@@ -40,6 +40,7 @@ public class Ball : MonoBehaviour
     GameObject obj;//leftSideRoot 을 담을 변수
     GameObject cameraPos;
     Transform centerEye;
+    public Material mt;
     
     
     //percent= -0.5 < percent <0.5 의 값들중하나로 지정하면될듯함.
@@ -110,10 +111,10 @@ public class Ball : MonoBehaviour
         //잘리는 순간 원뿔이면 꼭지점과 바닥은 더이상 충돌 검출을 할필요가 없으니 비활성화한다.
 
         gameObjects = MeshCut.Cut(gameObject, center, angle,
-         new Material(Shader.Find("Unlit/Color")));
+         new Material(Shader.Find("InSide2")));
         gameObjects[0].GetComponent<Ball>().isCutting = false;
         gameObjects[0].AddComponent<MeshCollider>().convex = true;
-        
+        gameObjects[0].GetComponent<MeshRenderer>().material = new Material(Shader.Find("InSide"));
         //gameObjects[0].AddComponent<Ball>();
         //gameObjects[0].transform.position += -angle*1;
         //태그를 추가해준다 자르고나서
