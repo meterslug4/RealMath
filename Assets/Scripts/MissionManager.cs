@@ -86,6 +86,7 @@ public class MissionManager : MonoBehaviour
         {
             Debug.Log("3스테이지 미션");
             nowMission = Random.Range(0,5);
+            Debug.Log(nowMission);
              MissionFigure(nowMission);
         }
         else
@@ -124,8 +125,16 @@ public class MissionManager : MonoBehaviour
             }
             else if(nowScenNum==2)
             {
-                nowGoal = Random.Range(0, 2);
+                nowGoal = Random.Range(0, 4);
                 if (nowGoal == 0)
+                {
+                    MakeTriangle();
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeSquare();
+                }
+                else if (nowGoal == 2)
                 {
                     MakePenta();
                 }

@@ -51,6 +51,7 @@ public class Ball : MonoBehaviour
 
     void Start()
     {
+        gameObject.GetComponent<Ball>().enabled = false;
         startPos = Vector3.zero;
         endPos = Vector3.zero;
         cameraPos = GameObject.Find("OVRCameraRig");

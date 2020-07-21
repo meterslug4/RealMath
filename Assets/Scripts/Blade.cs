@@ -156,24 +156,102 @@ public class Blade : MonoBehaviour
                 }
             }
             // 정팔면체에서 꼭지점을 지났을 경우
-            if (other.CompareTag("Point") == true && other.GetComponent<Ball>().objnum == 4)
+            //if (other.CompareTag("Point") == true && other.GetComponent<Ball>().objnum == 4)
+            //{
+            //    gameObject.GetComponent<AudioSource>().enabled = true;
+            //    if (other.transform.parent.GetComponent<Ball>().startPos == Vector3.zero)
+            //    {
+            //        //시작점이 아직 안정해졌는데 꼭지점을 건드렸다?? ->그 꼭지점을 시작점으로
+            //        other.transform.parent.GetComponent<Ball>().startPos = other.transform.position;
+            //        Vectexs.Get.isStartPoint = true;
+            //        //Vectexs.Get.msg = "시작점으로 꼭지점을 지남";
+            //    }
+            //    else
+            //    {
+            //        //시작점은 정해져 있는 상태로 꼭지점을 건드렸다? -> 그 꼭지점을 끝점으로
+            //        other.transform.parent.GetComponent<Ball>().endPos = other.transform.position;
+            //        Vectexs.Get.isEndPoint = true;
+            //        //Vectexs.Get.msg = "끝점으로 꼭지점을 지남";
+            //    }
+
+            if (other.GetComponent<Ball>().objnum == 4)
             {
-            gameObject.GetComponent<AudioSource>().enabled = true;
-                if (other.transform.parent.GetComponent<Ball>().startPos == Vector3.zero)
+                if (other.CompareTag("Point1") == true && other.transform.parent.GetComponent<Ball>().startPos == Vector3.zero)
                 {
-                    //시작점이 아직 안정해졌는데 꼭지점을 건드렸다?? ->그 꼭지점을 시작점으로
                     other.transform.parent.GetComponent<Ball>().startPos = other.transform.position;
-                    Vectexs.Get.isStartPoint = true;
-                    //Vectexs.Get.msg = "시작점으로 꼭지점을 지남";
+                    //포인트 1에 값이 시작값으로 들어가면 엔드값으로 2,3,4,5는 들어가면 안된다 마주보는 6만 엔드값으로 들어갈수 있음
+                    Vectexs.Get.point6 = true;
+                }
+                else if (other.CompareTag("Point2") == true && other.transform.parent.GetComponent<Ball>().startPos == Vector3.zero)
+                {
+                    other.transform.parent.GetComponent<Ball>().startPos = other.transform.position;
+                    Vectexs.Get.point4 = true;
+                }
+                else if (other.CompareTag("Point3") == true && other.transform.parent.GetComponent<Ball>().startPos == Vector3.zero)
+                {
+                    other.transform.parent.GetComponent<Ball>().startPos = other.transform.position;
+                    Vectexs.Get.point5 = true;
+                }
+                else if (other.CompareTag("Point4") == true && other.transform.parent.GetComponent<Ball>().startPos == Vector3.zero)
+                {
+                    other.transform.parent.GetComponent<Ball>().startPos = other.transform.position;
+                    Vectexs.Get.point2 = true;
+                }
+                else if (other.CompareTag("Point5") == true && other.transform.parent.GetComponent<Ball>().startPos == Vector3.zero)
+                {
+                    other.transform.parent.GetComponent<Ball>().startPos = other.transform.position;
+                    Vectexs.Get.point3 = true;
+                }
+                else if (other.CompareTag("Point6") == true && other.transform.parent.GetComponent<Ball>().startPos == Vector3.zero)
+                {
+                    other.transform.parent.GetComponent<Ball>().startPos = other.transform.position;
+                    Vectexs.Get.point1 = true;
                 }
                 else
                 {
-                    //시작점은 정해져 있는 상태로 꼭지점을 건드렸다? -> 그 꼭지점을 끝점으로
-                    other.transform.parent.GetComponent<Ball>().endPos = other.transform.position;
-                    Vectexs.Get.isEndPoint = true;
-                    //Vectexs.Get.msg = "끝점으로 꼭지점을 지남";
+
+                }
+
+
+                if (other.CompareTag("Point1") && other.transform.parent.GetComponent<Ball>().startPos != Vector3.zero)
+                {
+                    if (Vectexs.Get.point1 == true)
+                    {
+                        other.transform.parent.GetComponent<Ball>().endPos = other.transform.position;
+                    }
+
+                }
+                else if (other.CompareTag("Point2") && other.transform.parent.GetComponent<Ball>().startPos != Vector3.zero)
+                {
+                    if (Vectexs.Get.point2 == true)
+                        other.transform.parent.GetComponent<Ball>().endPos = other.transform.position;
+                }
+                else if (other.CompareTag("Point3") && other.transform.parent.GetComponent<Ball>().startPos != Vector3.zero)
+                {
+                    if (Vectexs.Get.point3 == true)
+                        other.transform.parent.GetComponent<Ball>().endPos = other.transform.position;
+                }
+                else if (other.CompareTag("Point4") && other.transform.parent.GetComponent<Ball>().startPos != Vector3.zero)
+                {
+                    if (Vectexs.Get.point4 == true)
+                        other.transform.parent.GetComponent<Ball>().endPos = other.transform.position;
+                }
+                else if (other.CompareTag("Point5") && other.transform.parent.GetComponent<Ball>().startPos != Vector3.zero)
+                {
+                    if (Vectexs.Get.point5 == true)
+                        other.transform.parent.GetComponent<Ball>().endPos = other.transform.position;
+                }
+                else if (other.CompareTag("Point6") && other.transform.parent.GetComponent<Ball>().startPos != Vector3.zero)
+                {
+                    if (Vectexs.Get.point6 == true)
+                        other.transform.parent.GetComponent<Ball>().endPos = other.transform.position;
+                }
+                else
+                {
+
                 }
             }
+        
         
     }
     private void OnTriggerExit(Collider other)
