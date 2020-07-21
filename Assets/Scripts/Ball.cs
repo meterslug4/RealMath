@@ -51,16 +51,19 @@ public class Ball : MonoBehaviour
 
     void Start()
     {
+
         startPos = Vector3.zero;
         endPos = Vector3.zero;
         cameraPos = GameObject.Find("OVRCameraRig");
         centerEye = cameraPos.transform.GetChild(0).GetChild(1).transform;
+
         //centerEye = cameraPos.transform;
         //if (objnum == 2)
         //{
         //    transform.Rotate(new Vector3(-90, 0, 0), Space.World);
         //}
         MoveTime = 3.0f;
+        gameObject.GetComponent<Ball>().enabled = false;
     }
 
     void Update()
