@@ -22,7 +22,9 @@ public class MissionManager : MonoBehaviour
 
         //DontDestroyOnLoad(gameObject);
     }
+    public Image missionUi;
     public Text missionText;
+    public Text missionName;
     public Text scoreText;
     //현재 씬번호
     [Header("현재씬번호")]
@@ -479,6 +481,8 @@ public class MissionManager : MonoBehaviour
     public void MakeTriangle()
     {
         missionText.text = "삼각형을";
+        missionName.text = "Triangle";
+        missionUi.sprite = Resources.Load<Sprite>("Triangle");
         judgment = 0;
     }
     /// <summary>
@@ -487,6 +491,8 @@ public class MissionManager : MonoBehaviour
     public void MakeSquare()
     {
         missionText.text = "사각형을";
+        missionName.text = "Quadrate";
+        missionUi.sprite = Resources.Load<Sprite>("Quadrate");
         judgment = 1;
     }
     /// <summary>
@@ -495,6 +501,8 @@ public class MissionManager : MonoBehaviour
     public void MakePenta()
     {
         missionText.text = "오각형을";
+        missionName.text = "Pentagon";
+        missionUi.sprite = Resources.Load<Sprite>("Pentagon");
         judgment = 2;
     }
     /// <summary>
@@ -503,6 +511,8 @@ public class MissionManager : MonoBehaviour
     public void MakeHexa()
     {
         missionText.text = "육각형을";
+        missionName.text = "Hexagon";
+        missionUi.sprite = Resources.Load<Sprite>("Hexagon");
         judgment = 3;
     }
     /// <summary>
@@ -511,6 +521,8 @@ public class MissionManager : MonoBehaviour
     public void MakeCircle()
     {
         missionText.text = "원을";
+        missionName.text = "Circle";
+        missionUi.sprite = Resources.Load<Sprite>("Circle");
         judgment = 4;
     }
     /// <summary>
@@ -519,6 +531,8 @@ public class MissionManager : MonoBehaviour
     public void MakeParabola()
     {
         missionText.text = "포물선을";
+        missionName.text = "Parabola";
+        missionUi.sprite = Resources.Load<Sprite>("Parabola");
         judgment = 5;
     }
     /// <summary>
@@ -527,6 +541,8 @@ public class MissionManager : MonoBehaviour
     public void MakeHyperbola()
     {
         missionText.text = "쌍곡선을";
+        missionName.text = "Hyperbola";
+        missionUi.sprite = Resources.Load<Sprite>("Hyperbola");
         judgment = 6;
     }
     /// <summary>
@@ -535,21 +551,29 @@ public class MissionManager : MonoBehaviour
     public void MakeEllipse()
     {
         missionText.text = "타원을";
+        missionName.text = "Ellipse";
+        missionUi.sprite = Resources.Load<Sprite>("Ellipse");
         judgment = 7;
     }
     public void MakeRect()
     {
         missionText.text = "직사각형을";
+        missionName.text = "Rectangle";
+        missionUi.sprite = Resources.Load<Sprite>("Rectangle");
         judgment = 8;
     }
     public void MakeTrapezoid()
     {
         missionText.text = "사다리꼴을";
+        missionName.text = "Trapezoid";
+        missionUi.sprite = Resources.Load<Sprite>("Trapezoid");
         judgment = 9;
     }
     public void MakeSquare2()
     {
         missionText.text = "정사각형을";
+        missionName.text = "Quadrate";
+        missionUi.sprite = Resources.Load<Sprite>("Quadrate");
         judgment = 10;
     }
 }

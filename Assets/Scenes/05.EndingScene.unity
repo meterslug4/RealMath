@@ -4866,7 +4866,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -1.92}
+  m_AnchoredPosition: {x: 0, y: -0.4}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1419474238
@@ -9883,6 +9883,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LevelLoder
+      objectReference: {fileID: 0}
+    - target: {fileID: 4773582518895482369, guid: 6a39c991da98b9b46b95b94a3b96fd49,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5876015125515100951, guid: 6a39c991da98b9b46b95b94a3b96fd49,
         type: 3}

@@ -160,6 +160,7 @@ public class Ball : MonoBehaviour
         //gameObjects[0].GetComponent<MeshCollider>().convex = true;
         //gameObjects[0].AddComponent<Rigidbody>();
         gameObjects[1].AddComponent<MeshCollider>().convex = true;
+        gameObjects[1].AddComponent<MeshCollider>().isTrigger = true;
         //gameObjects[1].AddComponent<Ball>();
         gameObjects[1].AddComponent<Rigidbody>();
         gameObjects[1].AddComponent<RemoveObj>();
