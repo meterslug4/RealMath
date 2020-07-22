@@ -8,6 +8,7 @@ public class MissionManager : MonoBehaviour
 {
     private static MissionManager m_Instance = null;
      public static MissionManager Get { get { return m_Instance; } set { m_Instance = value; } }
+
      private void Awake()
     {
         if (m_Instance == null)
@@ -41,18 +42,27 @@ public class MissionManager : MonoBehaviour
 
     void Start()
     {
-        nowScore = 0;
         nowScenNum = SceneManager.GetActiveScene().buildIndex;
+        nowScore = 0;
+        if (nowScenNum == 2)
+        {
+            nowScore = 500;
+        }
+        if( nowScenNum ==3)
+        {
+            nowScore = 1000;
+        }
+
     }
 
    
     void Update()
     {
         scoreText.text = nowScore.ToString();
-        if(isMissionOn==true && nowScore<500)
+        if(isMissionOn==true && nowScore<3000)
         {
             missionEffect.GetComponent<ParticleSystem>().Play();
-           isMissionOn = false;
+            isMissionOn = false;
             success.SetActive(false);
             fail.SetActive(false);
 
@@ -60,34 +70,46 @@ public class MissionManager : MonoBehaviour
         }
         if(nowScore >=500 && nowScenNum==1)
         {
-            SceneManager.LoadScene(2);
+            Invoke("LoadScene2", 2.5f);
         }
-        if (nowScore >= 500 && nowScenNum == 2)
+        if (nowScore >= 1000 && nowScenNum == 2)
         {
-            SceneManager.LoadScene(3);
+            Invoke("LoadScene3", 2.5f);
         }
+
     }
+
+
+    void LoadScene2()
+    {
+        SceneManager.LoadScene(2);
+    }
+    void LoadScene3()
+    {
+        SceneManager.LoadScene(3);
+    }
+
     public void MissionOn()
     {
         //씬구분
-        if (nowScenNum == 1)
+        if (LevelLoder.gameLevel == 1)
         {
-            Debug.Log("1스테이지 미션");
+            Debug.Log("난이도 하");
             nowMission = Random.Range(0,5);
-            MissionFigure(nowMission);
+            LowLvMission(nowMission);
         }
-        else if (nowScenNum == 2)
+        else if (LevelLoder.gameLevel == 2)
         {
-            Debug.Log("2스테이지 미션");
+            Debug.Log("난이도 중");
             nowMission = Random.Range(0,5);
-             MissionFigure(nowMission);
+            MidLvMission(nowMission);
         }
-        else if (nowScenNum == 3)
+        else if (LevelLoder.gameLevel == 3)
         {
-            Debug.Log("3스테이지 미션");
+            Debug.Log("난이도 상");
             nowMission = Random.Range(0,5);
             Debug.Log(nowMission);
-             MissionFigure(nowMission);
+            HighLvMission(nowMission);
         }
         else
         {
@@ -98,7 +120,7 @@ public class MissionManager : MonoBehaviour
     ///  0~4 사이의 번호를 매개변수로 받고 0번 큐브 1번 실린더 2번 원뿔 3번 정사면체 4번 정팔면체 관련미션이다
     /// </summary>
     /// <param name="num"></param>
-    public void MissionFigure(int num)
+    public void HighLvMission(int num)
     {
         if(num==0)
         {
@@ -163,7 +185,7 @@ public class MissionManager : MonoBehaviour
                     MakeHexa();
                 }
             }
-        }
+        }//큐브미션
         else if(num==1)
         {
             Debug.Log("실린더관련 미션"); //사각형 포물선 원 타원
@@ -228,7 +250,7 @@ public class MissionManager : MonoBehaviour
                     MakeEllipse();
                 }
             }
-        }
+        }//실린더미션
         else if(num==2)
         {
             Debug.Log("원뿔관련 미션"); //삼각형, 타원, 원, 포물선, 쌍곡선
@@ -304,7 +326,7 @@ public class MissionManager : MonoBehaviour
                     MakeHyperbola();//쌍곡선
                 }
             }
-        }
+        }//원뿔미션
         else if(num==3)
         {
             Debug.Log("정사면체관련 미션");
@@ -344,7 +366,7 @@ public class MissionManager : MonoBehaviour
                     MakeSquare();
                 }
             }
-        }
+        }//정사면체미션
         else
         {
             Debug.Log("정팔면체관련 미션");
@@ -396,7 +418,567 @@ public class MissionManager : MonoBehaviour
                     MakeHexa();
                 }
             }
-        }
+        }//정팔면체미션
+    }
+    public void MidLvMission(int num)
+    {
+        if (num == 0)
+        {
+            Debug.Log("큐브관련 미션");
+
+                nowGoal = Random.Range(0, 4);
+                if (nowGoal == 0)
+                {
+                    MakeTriangle();
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeSquare();
+                }
+                else if (nowGoal == 2)
+                {
+                    MakePenta();
+                }
+                else
+                {
+                    MakeHexa();
+                }
+            
+         
+        }//큐브미션
+        else if (num == 1)
+        {
+            Debug.Log("실린더관련 미션"); //사각형 포물선 원 타원
+            if (nowScenNum == 1)
+            {
+                nowGoal = Random.Range(0, 3);
+                if (nowGoal == 0)
+                {
+                    MakeSquare();
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeCircle();
+                }
+                //else if (nowGoal == 2)
+                //{
+                //    MakeParabola();
+                //}
+                else
+                {
+                    MakeEllipse();
+                }
+            }
+            else if (nowScenNum == 2)
+            {
+                nowGoal = Random.Range(0, 3);
+                if (nowGoal == 0)
+                {
+                    MakeSquare();
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeCircle();
+                }
+                //else if (nowGoal == 2)
+                //{
+                //    MakeParabola();
+                //}
+                else
+                {
+                    MakeEllipse();
+                }
+
+            }
+            else if (nowScenNum == 3)
+            {
+                nowGoal = Random.Range(0, 3);
+                if (nowGoal == 0)
+                {
+                    MakeSquare();
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeCircle();
+                }
+                //else if (nowGoal == 2)
+                //{
+                //    MakeParabola();
+                //}
+                else
+                {
+                    MakeEllipse();
+                }
+            }
+        }//실린더미션
+        else if (num == 2)
+        {
+            Debug.Log("원뿔관련 미션"); //삼각형, 타원, 원, 포물선, 쌍곡선
+            if (nowScenNum == 1)
+            {
+                nowGoal = Random.Range(0, 5);
+                if (nowGoal == 0)
+                {
+                    MakeTriangle();//삼각형
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeCircle();//원
+                }
+                else if (nowGoal == 2)
+                {
+                    MakeParabola();//포물선
+                }
+                else if (nowGoal == 3)
+                {
+                    MakeEllipse();//타원
+                }
+                else
+                {
+                    MakeHyperbola();//쌍곡선
+                }
+            }
+            else if (nowScenNum == 2)
+            {
+                nowGoal = Random.Range(0, 5);
+                if (nowGoal == 0)
+                {
+                    MakeTriangle();//삼각형
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeCircle();//원
+                }
+                else if (nowGoal == 2)
+                {
+                    MakeParabola();//포물선
+                }
+                else if (nowGoal == 3)
+                {
+                    MakeEllipse();//타원
+                }
+                else
+                {
+                    MakeHyperbola();//쌍곡선
+                }
+            }
+            else if (nowScenNum == 3)
+            {
+                nowGoal = Random.Range(0, 5);
+                if (nowGoal == 0)
+                {
+                    MakeTriangle();//삼각형
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeCircle();//원
+                }
+                else if (nowGoal == 2)
+                {
+                    MakeParabola();//포물선
+                }
+                else if (nowGoal == 3)
+                {
+                    MakeEllipse();//타원
+                }
+                else
+                {
+                    MakeHyperbola();//쌍곡선
+                }
+            }
+        }//원뿔미션
+        else if (num == 3)
+        {
+            Debug.Log("정사면체관련 미션");
+            if (nowScenNum == 1)
+            {
+                nowGoal = Random.Range(0, 2);
+                if (nowGoal == 0)
+                {
+                    MakeTriangle();
+                }
+                else
+                {
+                    MakeSquare();
+                }
+            }
+            else if (nowScenNum == 2)
+            {
+                nowGoal = Random.Range(0, 2);
+                if (nowGoal == 0)
+                {
+                    MakeTriangle();
+                }
+                else
+                {
+                    MakeSquare();
+                }
+            }
+            else if (nowScenNum == 3)
+            {
+                nowGoal = Random.Range(0, 2);
+                if (nowGoal == 0)
+                {
+                    MakeTriangle();
+                }
+                else
+                {
+                    MakeSquare();
+                }
+            }
+        }//정사면체미션
+        else
+        {
+            Debug.Log("정팔면체관련 미션");
+            if (nowScenNum == 1)
+            {
+                nowGoal = Random.Range(0, 2);
+                if (nowGoal == 0)
+                {
+                    MakeSquare();
+                }
+                //else if (nowGoal == 1)
+                //{
+                //    MakePenta();
+                //}
+                else
+                {
+                    MakeHexa();
+                }
+            }
+            else if (nowScenNum == 2)
+            {
+                nowGoal = Random.Range(0, 2);
+                if (nowGoal == 0)
+                {
+                    MakeSquare();
+                }
+                //else if (nowGoal == 1)
+                //{
+                //    MakePenta();
+                //}
+                else
+                {
+                    MakeHexa();
+                }
+            }
+            else if (nowScenNum == 3)
+            {
+                nowGoal = Random.Range(0, 2);
+                if (nowGoal == 0)
+                {
+                    MakeSquare();
+                }
+                //else if (nowGoal == 1)
+                //{
+                //    MakePenta();
+                //}
+                else
+                {
+                    MakeHexa();
+                }
+            }
+        }//정팔면체미션
+    }
+    public void LowLvMission(int num)
+    {
+        if (num == 0)
+        {
+            Debug.Log("큐브관련 미션");
+            if (nowScenNum == 1)
+            {
+                nowGoal = Random.Range(0, 4);
+                if (nowGoal == 0)
+                {
+                    MakeTriangle();
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeSquare();
+                }
+                else if (nowGoal == 2)
+                {
+                    MakePenta();
+                }
+                else
+                {
+                    MakeHexa();
+                }
+            }
+            else if (nowScenNum == 2)
+            {
+                nowGoal = Random.Range(0, 4);
+                if (nowGoal == 0)
+                {
+                    MakeTriangle();
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeSquare();
+                }
+                else if (nowGoal == 2)
+                {
+                    MakePenta();
+                }
+                else
+                {
+                    MakeHexa();
+                }
+            }
+            else if (nowScenNum == 3)
+            {
+                nowGoal = Random.Range(0, 4);
+                if (nowGoal == 0)
+                {
+                    MakeTriangle();
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeSquare();
+                }
+                else if (nowGoal == 2)
+                {
+                    MakePenta();
+                }
+                else
+                {
+                    MakeHexa();
+                }
+            }
+        }//큐브미션
+        else if (num == 1)
+        {
+            Debug.Log("실린더관련 미션"); //사각형 포물선 원 타원
+            if (nowScenNum == 1)
+            {
+                nowGoal = Random.Range(0, 3);
+                if (nowGoal == 0)
+                {
+                    MakeSquare();
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeCircle();
+                }
+                //else if (nowGoal == 2)
+                //{
+                //    MakeParabola();
+                //}
+                else
+                {
+                    MakeEllipse();
+                }
+            }
+            else if (nowScenNum == 2)
+            {
+                nowGoal = Random.Range(0, 3);
+                if (nowGoal == 0)
+                {
+                    MakeSquare();
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeCircle();
+                }
+                //else if (nowGoal == 2)
+                //{
+                //    MakeParabola();
+                //}
+                else
+                {
+                    MakeEllipse();
+                }
+
+            }
+            else if (nowScenNum == 3)
+            {
+                nowGoal = Random.Range(0, 3);
+                if (nowGoal == 0)
+                {
+                    MakeSquare();
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeCircle();
+                }
+                //else if (nowGoal == 2)
+                //{
+                //    MakeParabola();
+                //}
+                else
+                {
+                    MakeEllipse();
+                }
+            }
+        }//실린더미션
+        else if (num == 2)
+        {
+            Debug.Log("원뿔관련 미션"); //삼각형, 타원, 원, 포물선, 쌍곡선
+            if (nowScenNum == 1)
+            {
+                nowGoal = Random.Range(0, 5);
+                if (nowGoal == 0)
+                {
+                    MakeTriangle();//삼각형
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeCircle();//원
+                }
+                else if (nowGoal == 2)
+                {
+                    MakeParabola();//포물선
+                }
+                else if (nowGoal == 3)
+                {
+                    MakeEllipse();//타원
+                }
+                else
+                {
+                    MakeHyperbola();//쌍곡선
+                }
+            }
+            else if (nowScenNum == 2)
+            {
+                nowGoal = Random.Range(0, 5);
+                if (nowGoal == 0)
+                {
+                    MakeTriangle();//삼각형
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeCircle();//원
+                }
+                else if (nowGoal == 2)
+                {
+                    MakeParabola();//포물선
+                }
+                else if (nowGoal == 3)
+                {
+                    MakeEllipse();//타원
+                }
+                else
+                {
+                    MakeHyperbola();//쌍곡선
+                }
+            }
+            else if (nowScenNum == 3)
+            {
+                nowGoal = Random.Range(0, 5);
+                if (nowGoal == 0)
+                {
+                    MakeTriangle();//삼각형
+                }
+                else if (nowGoal == 1)
+                {
+                    MakeCircle();//원
+                }
+                else if (nowGoal == 2)
+                {
+                    MakeParabola();//포물선
+                }
+                else if (nowGoal == 3)
+                {
+                    MakeEllipse();//타원
+                }
+                else
+                {
+                    MakeHyperbola();//쌍곡선
+                }
+            }
+        }//원뿔미션
+        else if (num == 3)
+        {
+            Debug.Log("정사면체관련 미션");
+            if (nowScenNum == 1)
+            {
+                nowGoal = Random.Range(0, 2);
+                if (nowGoal == 0)
+                {
+                    MakeTriangle();
+                }
+                else
+                {
+                    MakeSquare();
+                }
+            }
+            else if (nowScenNum == 2)
+            {
+                nowGoal = Random.Range(0, 2);
+                if (nowGoal == 0)
+                {
+                    MakeTriangle();
+                }
+                else
+                {
+                    MakeSquare();
+                }
+            }
+            else if (nowScenNum == 3)
+            {
+                nowGoal = Random.Range(0, 2);
+                if (nowGoal == 0)
+                {
+                    MakeTriangle();
+                }
+                else
+                {
+                    MakeSquare();
+                }
+            }
+        }//정사면체미션
+        else
+        {
+            Debug.Log("정팔면체관련 미션");
+            if (nowScenNum == 1)
+            {
+                nowGoal = Random.Range(0, 2);
+                if (nowGoal == 0)
+                {
+                    MakeSquare();
+                }
+                //else if (nowGoal == 1)
+                //{
+                //    MakePenta();
+                //}
+                else
+                {
+                    MakeHexa();
+                }
+            }
+            else if (nowScenNum == 2)
+            {
+                nowGoal = Random.Range(0, 2);
+                if (nowGoal == 0)
+                {
+                    MakeSquare();
+                }
+                //else if (nowGoal == 1)
+                //{
+                //    MakePenta();
+                //}
+                else
+                {
+                    MakeHexa();
+                }
+            }
+            else if (nowScenNum == 3)
+            {
+                nowGoal = Random.Range(0, 2);
+                if (nowGoal == 0)
+                {
+                    MakeSquare();
+                }
+                //else if (nowGoal == 1)
+                //{
+                //    MakePenta();
+                //}
+                else
+                {
+                    MakeHexa();
+                }
+            }
+        }//정팔면체미션
     }
     /// <summary>
     /// 삼각형은 큐브, 정사면체, 원뿔 에서만 발생해야함

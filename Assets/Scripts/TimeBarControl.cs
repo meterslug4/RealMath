@@ -13,18 +13,13 @@ public class TimeBarControl : MonoBehaviour
     public Image TimeBar;
     public GameObject dieEffect;
     public GameObject robot;
-    public GameObject success;
-    public GameObject fail;
 
     public float currenttime;
 
-    public GameObject startUI;
-    public GameObject wall;
-    public GameObject vertex;
-    public GameObject timeRobot;
+
 
     float time;
-
+    public float timeSpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,14 +35,14 @@ public class TimeBarControl : MonoBehaviour
         //mat.SetColor("_Color", goRed);
         if(MissionManager.Get.isTimeFlow == true)
         {
-            TimeCount();
+            TimeCount(timeSpeed);
         }
 
     }
 
-    public void TimeCount()
+    public void TimeCount(float num)
     {
-        playTimeCurrent -= 1 * Time.deltaTime;
+        playTimeCurrent -= num * Time.deltaTime;
 
         TimeBar.fillAmount = playTimeCurrent / playTimeMax;
 
@@ -61,13 +56,12 @@ public class TimeBarControl : MonoBehaviour
             playTimeCurrent = 0;
             dieEffect.SetActive(true);
             gameObject.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
-            fail.SetActive(true);
-            Invoke("ChangeStartScene", 3.0f);
+            Invoke("ChangeEndScene", 2.0f);
         }
     }
-    public void ChangeStartScene()
+    public void ChangeEndScene()
     {
-        SceneManager.LoadScene("01.StartScene");
+        SceneManager.LoadScene(4);
     }
 
     /*public void MissionSuccess()

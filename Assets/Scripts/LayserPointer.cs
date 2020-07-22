@@ -8,7 +8,7 @@ public class LayserPointer : MonoBehaviour
     private LineRenderer layser;
     private RaycastHit Collided_object;
     private GameObject currentObject;
-    public GameObject play;
+
 
     public float raycastDistance = 100f;
 
@@ -39,8 +39,8 @@ public class LayserPointer : MonoBehaviour
             {
                 if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
                 {
-                    play.GetComponent<AudioSource>().enabled = true;
                     Collided_object.collider.gameObject.GetComponent<Button>().onClick.Invoke();
+                    Collided_object.collider.gameObject.GetComponent<AudioSource>().Play();
                 }
 
                 else
