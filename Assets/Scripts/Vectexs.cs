@@ -455,7 +455,7 @@ public class Vectexs : MonoBehaviour
                 {
                     if (isconePoint == false && isconePlat == true)
                     {
-                        if (Mathf.Abs(Angle - 25) < 7f) //원뿔에서의 포물선 판정
+                        if (Mathf.Abs(Angle - 25) < 10f) //원뿔에서의 포물선 판정
                         {
                             Debug.Log("성공");
                             MissionManager.Get.nowScore += 100;
@@ -472,22 +472,25 @@ public class Vectexs : MonoBehaviour
                         Debug.Log("실패");
                         fail.SetActive(true);
                     }
-                    //else if ((isTop == true && isBotum == false && finalVectors.Count != 4) ||
-                    //            (isTop == false && isBotum == true && finalVectors.Count != 4))
-                    //{
-                    //    Debug.Log("성공");
-                    //    MissionManager.Get.nowScore += 100;
-                    //    success.SetActive(true);
-                    //}
-
                 }
                 ResetBool();
                 break;
             case 6: //쌍곡선 판정
-                ResetBool();
+                float dot = Vector3.Angle(Vector3.up, _totaldir);
+                Angle = dot;
+                if (Angle > 90)
+                {
+                    float temp;
+                    temp = Angle - 90;
+                    Angle = 90 - temp;
+                }
+                else
+                {
+
+                }
                 if (isconePlat == true && isconePoint == false && currentFigure == 2) //원뿔에서 쌍곡선 판정
                 {
-                    if (Mathf.Abs(_startPos.x - _endPos.x) < 0.09f && Mathf.Abs(_startPos.z - _endPos.z) < 0.09f)
+                    if (Mathf.Abs(Angle - 4) < 1f)
                     {
                         Debug.Log("성공");
                         MissionManager.Get.nowScore += 100;
@@ -504,6 +507,7 @@ public class Vectexs : MonoBehaviour
                     Debug.Log("실패");
                     fail.SetActive(true);
                 }
+                ResetBool();
                 break;
             case 7: //타원형 판정
                 if (currentFigure == 1)
@@ -554,6 +558,18 @@ public class Vectexs : MonoBehaviour
                 }
                 ResetBool();
                 break;
+            case 8://직사각형
+                Rectangle();
+                ResetBool();
+                break;
+            case 9://사다리꼴
+                Trapezoid();
+                ResetBool(); 
+                break;
+            case 10://정사각형
+                Square();
+                ResetBool(); 
+                break;
         }
     }
     public void ResetBool()
@@ -574,65 +590,111 @@ public class Vectexs : MonoBehaviour
          point5 = false;
          point6 = false;
     //MissionManager.Get.isMissionOn = true;
-}
-    //public void TriangleCheck()
-    //{
-    //    //절대값으로 각 점간의 길이 구하기
-    //    float a = Mathf.Abs((finalVectors[0] - finalVectors[1]).sqrMagnitude);
-    //    float b = Mathf.Abs((finalVectors[0] - finalVectors[2]).sqrMagnitude);
-    //    float c = Mathf.Abs((finalVectors[1] - finalVectors[2]).sqrMagnitude);
-    //    //각 길이에 10씩 곱하기
-    //    a = a * 10;
-    //    b = b * 10;
-    //    c = c * 10;
-    //    Debug.Log(a);
-    //    Debug.Log(b);
-    //    Debug.Log(c);
-    //    if(Mathf.Abs(a-b)<0.5 && Mathf.Abs(a - c) < 0.5 && Mathf.Abs(c - b) < 0.5)
-    //    {
-    //        msg = "자른 단면은 정삼각형 입니다.";
-    //    }
-    //    else
-    //    {
+    }
 
-    //        if(Mathf.Abs(a - b) < 0.5 && Mathf.Abs(a - c) < 1 && Mathf.Abs(b - c)<1)
-    //        {
-    //            msg = "자른 단면은 이등변 삼각형 입니다.";
-    //        }
-    //        else
-    //        {
-    //            msg = "자른 단면은 삼각형 입니다.";
-    //        }
-    //    }
-    //}
-    //public void Square()
-    //{
-    //    float a= Mathf.Abs((finalVectors[1] - finalVectors[0]).sqrMagnitude);
-    //    float b = Mathf.Abs((finalVectors[2] - finalVectors[0]).sqrMagnitude);
-    //    float c = Mathf.Abs((finalVectors[3] - finalVectors[1]).sqrMagnitude);
-    //    float d = Mathf.Abs((finalVectors[3] - finalVectors[2]).sqrMagnitude);
-    //    //각 길이에 10씩 곱하기 
-    //    a = a * 10;
-    //    b = b * 10;
-    //    c = c * 10;
-    //    d = d * 10;
-    //    if(Mathf.Abs(a-d)<0.5 && Mathf.Abs(b-c)<0.5 && Mathf.Abs(a-c)<0.5)
-    //    {
-    //        msg = "자른 단면은 정사각형 입니다.";
-    //    }
-    //    else if(Mathf.Abs(a - d) > 0.5 && Mathf.Abs(b - c) < 0.5 && Mathf.Abs(a - b) > 0.5)
-    //    {
-    //        msg = "자른 단면은 평행사변형 입니다.";
-    //    }
-    //    else if(Mathf.Abs(a - b) > 0.5 && Mathf.Abs(a - c) > 0.5 && Mathf.Abs(a - d) > 0.5&& Mathf.Abs(b - d) > 0.5)
-    //    {
-    //        msg = "자른 단면은 사다리꼴 입니다.";
-    //    }
-    //    else
-    //    {
-    //        msg = "자른 단면은 직각 삼각형 입니다.";
-    //    }
-    //}
+    public void Trapezoid()
+    {
+        if (finalVectors.Count == 4)
+        {
+            Vector3 v1 = finalVectors[1] = finalVectors[0];
+            Vector3 v2 = finalVectors[2] = finalVectors[0];
+            Vector3 v3 = finalVectors[3] = finalVectors[1];
+            Vector3 v4 = finalVectors[3] = finalVectors[2];
 
+            if ((Vector3.Cross(v1, v4) == Vector3.zero && Vector3.Cross(v2, v3) != Vector3.zero) ||
+                    (Vector3.Cross(v1, v4) != Vector3.zero && Vector3.Cross(v2, v3) == Vector3.zero))
+            {
+                Debug.Log("평행사변형이다");
+                Debug.Log("성공");
+                MissionManager.Get.nowScore += 100;
+                success.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("실패");
+                fail.SetActive(true);
+            }
+        }
+        else
+        {
+            Debug.Log("실패");
+            fail.SetActive(true);
+        }
+    }
+    public void Rectangle()
+    {
+        Vector3 v1 = finalVectors[1] = finalVectors[0];
+        Vector3 v2 = finalVectors[2] = finalVectors[0];
+        Vector3 v3 = finalVectors[3] = finalVectors[1];
+        Vector3 v4 = finalVectors[3] = finalVectors[2];
+        if ((Vector3.Cross(v1, v4) == Vector3.zero && Vector3.Cross(v2, v3) == Vector3.zero))
+        {
+            float a = Mathf.Abs((finalVectors[1] - finalVectors[0]).sqrMagnitude);
+            float b = Mathf.Abs((finalVectors[2] - finalVectors[0]).sqrMagnitude);
+            float c = Mathf.Abs((finalVectors[3] - finalVectors[1]).sqrMagnitude);
+            float d = Mathf.Abs((finalVectors[3] - finalVectors[2]).sqrMagnitude);
+            //각 길이에 10씩 곱하기
+            a = a * 10;
+            b = b * 10;
+            c = c * 10;
+            d = d * 10;
+
+            if (Mathf.Abs(a - b) > 2)
+            {
+                Debug.Log("직사각형이다");
+                Debug.Log("성공");
+                MissionManager.Get.nowScore += 100;
+                success.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("실패");
+                fail.SetActive(true);
+            }
+        }
+        else
+        {
+            Debug.Log("실패");
+            fail.SetActive(true);
+        }
+    }
+
+    public void Square()
+    {
+        Vector3 v1 = finalVectors[1] = finalVectors[0];
+        Vector3 v2 = finalVectors[2] = finalVectors[0];
+        Vector3 v3 = finalVectors[3] = finalVectors[1];
+        Vector3 v4 = finalVectors[3] = finalVectors[2];
+        if ((Vector3.Cross(v1, v4) == Vector3.zero && Vector3.Cross(v2, v3) == Vector3.zero))
+        {
+            float a = Mathf.Abs((finalVectors[1] - finalVectors[0]).sqrMagnitude);
+            float b = Mathf.Abs((finalVectors[2] - finalVectors[0]).sqrMagnitude);
+            float c = Mathf.Abs((finalVectors[3] - finalVectors[1]).sqrMagnitude);
+            float d = Mathf.Abs((finalVectors[3] - finalVectors[2]).sqrMagnitude);
+            //각 길이에 10씩 곱하기
+            a = a * 10;
+            b = b * 10;
+            c = c * 10;
+            d = d * 10;
+
+            if (Mathf.Abs(a - b) < 2)
+            {
+                Debug.Log("정사각형이다");
+                Debug.Log("성공");
+                MissionManager.Get.nowScore += 100;
+                success.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("실패");
+                fail.SetActive(true);
+            }
+        }
+        else
+        {
+            Debug.Log("실패");
+            fail.SetActive(true);
+        }
+    }
 
 }
