@@ -1626,6 +1626,12 @@ MonoBehaviour:
   _totaldir: {x: 0, y: 0, z: 0}
   success: {fileID: 2105833596}
   fail: {fileID: 1672070250}
+  point1: 0
+  point2: 0
+  point3: 0
+  point4: 0
+  point5: 0
+  point6: 0
   isGet: 0
   vertexs: []
   vertexs_RemoveDuple: []
@@ -6785,7 +6791,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -2.04, y: -8.94, z: -28.505}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
-  m_Children: []
+  m_Children:
+  - {fileID: 1880341880}
   m_Father: {fileID: 719010746}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9046,6 +9053,75 @@ Transform:
   m_Father: {fileID: 1496199704}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1003899986
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 763771370}
+    m_Modifications:
+    - target: {fileID: 790779315299733482, guid: 480affdd3c2b3e644b63f7c999c6f4b4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 790779315299733482, guid: 480affdd3c2b3e644b63f7c999c6f4b4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 790779315299733482, guid: 480affdd3c2b3e644b63f7c999c6f4b4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 790779315299733482, guid: 480affdd3c2b3e644b63f7c999c6f4b4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 790779315299733482, guid: 480affdd3c2b3e644b63f7c999c6f4b4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 790779315299733482, guid: 480affdd3c2b3e644b63f7c999c6f4b4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 790779315299733482, guid: 480affdd3c2b3e644b63f7c999c6f4b4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 790779315299733482, guid: 480affdd3c2b3e644b63f7c999c6f4b4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 790779315299733482, guid: 480affdd3c2b3e644b63f7c999c6f4b4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 790779315299733482, guid: 480affdd3c2b3e644b63f7c999c6f4b4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 790779315299733482, guid: 480affdd3c2b3e644b63f7c999c6f4b4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 790779315299961542, guid: 480affdd3c2b3e644b63f7c999c6f4b4,
+        type: 3}
+      propertyPath: m_Name
+      value: Explosion
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 480affdd3c2b3e644b63f7c999c6f4b4, type: 3}
 --- !u!1001 &1032481301
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15251,7 +15327,7 @@ MonoBehaviour:
   subblade: {fileID: 0}
   cutEffect: {fileID: 8939319613889240757, guid: 73486ce0d4b7a8b468d6c985841ca10c,
     type: 3}
-  scanner: {fileID: 1513445605}
+  cutSound: {fileID: 8300000, guid: 318df6059ef9b9744ab0f6bdf17f83ad, type: 3}
 --- !u!54 &1681530769
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -15335,11 +15411,11 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1681530766}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 307a03dc7b43ae143898ea8b551a73f0, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 318df6059ef9b9744ab0f6bdf17f83ad, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
@@ -16562,6 +16638,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4771953662109391507, guid: 392667f75ecb796439a867b73461c714,
     type: 3}
   m_PrefabInstance: {fileID: 1816121630}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1880341880 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 790779315299733482, guid: 480affdd3c2b3e644b63f7c999c6f4b4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1003899986}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1926870058
 GameObject:

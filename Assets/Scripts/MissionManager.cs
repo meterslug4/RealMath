@@ -52,7 +52,7 @@ public class MissionManager : MonoBehaviour
         if(isMissionOn==true && nowScore<500)
         {
             missionEffect.GetComponent<ParticleSystem>().Play();
-           isMissionOn = false;
+            isMissionOn = false;
             success.SetActive(false);
             fail.SetActive(false);
 

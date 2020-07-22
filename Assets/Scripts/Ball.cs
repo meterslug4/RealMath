@@ -41,6 +41,7 @@ public class Ball : MonoBehaviour
     GameObject cameraPos;
     Transform centerEye;
     public Material mat;
+    //public GameObject explosion;
     
     //percent= -0.5 < percent <0.5 의 값들중하나로 지정하면될듯함.
     //public float percent=0.0f;
@@ -131,6 +132,9 @@ public class Ball : MonoBehaviour
             }
             gameObject.GetComponent<MeshCollider>().enabled = false;
             gameObject.GetComponent<MeshRenderer>().enabled = false;
+            GameObject explosion = GameObject.Find("Explosion");
+            explosion.GetComponent<ParticleSystem>().Play();
+            explosion.GetComponent<AudioSource>().Play();
             Invoke("ResetObj", 2.0f);
             Invoke("ObjActivefalse", 3.5f);
         }
