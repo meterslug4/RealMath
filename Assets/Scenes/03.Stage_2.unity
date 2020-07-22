@@ -6030,6 +6030,7 @@ MonoBehaviour:
   success: {fileID: 1371377804}
   fail: {fileID: 1127934834}
   missionEffect: {fileID: 581037449}
+  sceneEffect: {fileID: 0}
 --- !u!4 &588633769
 Transform:
   m_ObjectHideFlags: 0
@@ -14347,10 +14348,7 @@ MonoBehaviour:
   success: {fileID: 0}
   fail: {fileID: 1127934834}
   currenttime: 0
-  startUI: {fileID: 0}
-  wall: {fileID: 0}
-  vertex: {fileID: 0}
-  timeRobot: {fileID: 0}
+  timeSpeed: 2
 --- !u!1 &1688746251
 GameObject:
   m_ObjectHideFlags: 0

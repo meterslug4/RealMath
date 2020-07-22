@@ -4775,10 +4775,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BluePlasmaImpact
       objectReference: {fileID: 0}
-    - target: {fileID: 106912, guid: e30d9a56850358e4eaecf624da0aed52, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 499600, guid: e30d9a56850358e4eaecf624da0aed52, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -11730,13 +11726,8 @@ MonoBehaviour:
   TimeBar: {fileID: 485933405}
   dieEffect: {fileID: 1294239017}
   robot: {fileID: 1668860737}
-  success: {fileID: 0}
-  fail: {fileID: 660009230}
   currenttime: 0
-  startUI: {fileID: 0}
-  wall: {fileID: 0}
-  vertex: {fileID: 0}
-  timeRobot: {fileID: 0}
+  timeSpeed: 1
 --- !u!1001 &1348263743
 PrefabInstance:
   m_ObjectHideFlags: 0

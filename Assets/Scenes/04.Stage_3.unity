@@ -8144,6 +8144,7 @@ MonoBehaviour:
   wall: {fileID: 0}
   vertex: {fileID: 0}
   timeRobot: {fileID: 0}
+  timeSpeed: 3
 --- !u!1001 &945725277
 PrefabInstance:
   m_ObjectHideFlags: 0
